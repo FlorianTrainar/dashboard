@@ -18,8 +18,8 @@ export default defineConfig({
         short_name: 'FloBoard',
         start_url: '/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#FF8000',
+        background_color: '#283038',
+        theme_color: '#283038',
         icons: [
           {
             src: 'pwa-192x192.png',
