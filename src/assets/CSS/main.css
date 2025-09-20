@@ -57,6 +57,7 @@ button:hover {
 
 .page-title {
   display: flex;
+  gap: 10px;
   position: relative;
 }
 .page-title > .open-form-btn {

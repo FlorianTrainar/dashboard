@@ -82,7 +82,7 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
           />
         </DraggableModal>
 
-        <h1>VUE</h1>
+        <h1>JavaScript</h1>
       </div>
 
       <div class="cat-selector">
