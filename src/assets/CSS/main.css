@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 :root {
-  --back-color1-: #14191d;
+  --back-color1-: 14191d#;
   --back-color2-: #283038;
   --back-color3-: #445566;
   --back-color4-: #6c8093;

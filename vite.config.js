@@ -14,8 +14,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'LeBonVue',
-        short_name: 'BonVue',
+        name: 'FloBoard',
+        short_name: 'FloBoard',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',

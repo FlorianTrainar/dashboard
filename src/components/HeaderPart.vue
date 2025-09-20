@@ -43,7 +43,7 @@ const showMenu = (menu) => {
           :to="{ name: 'vue' }"
           @click="subSelected = 'vue'"
           :class="{ active: subSelected === 'vue' }"
-          >VUE</RouterLink
+          >VUE.js</RouterLink
         >
       </div>
     </div>
