@@ -1,0 +1,201 @@
+@import './base.css';
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  --back-color1-: #14191d;
+  --back-color2-: #283038;
+  --back-color3-: #445566;
+  --back-color4-: #6c8093;
+  --back-color5-: #d8dde2;
+
+  --font-color1-: #ffffff;
+  --font-color2-: #a7b8c8;
+  --font-color3-: #79838c;
+  --font-color4-: #14191d;
+
+  --hover-color-: rgb(72, 182, 255);
+  --warning-color-: rgb(219, 43, 30);
+  --save-color-: rgb(51, 180, 51);
+  --header-width-: 180px;
+}
+
+main {
+  background-color: var(--back-color2-);
+  color: var(--font-color1-);
+  width: 100vw;
+  min-height: 100vh;
+}
+.wrapper {
+  width: 1000px;
+  margin: 40px 0 0 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 22px;
+}
+
+button {
+  background: none;
+  border: none;
+  color: var(--font-color2-);
+  padding: 0;
+}
+button:hover {
+  color: var(--hover-color-);
+  cursor: pointer;
+}
+
+/* PAGE TITLE */
+
+.page-title {
+  display: flex;
+  position: relative;
+}
+.page-title > .open-form-btn {
+  font-size: 30px;
+}
+
+/* CAT SELECTOR */
+
+.cat-selector {
+  /* border-bottom: solid 1px var(--back-color4-); */
+  display: flex;
+}
+.cat-selector > button {
+  font-size: 20px;
+}
+
+.cat-selector > button.active {
+  color: var(--font-color1-);
+}
+
+.delete-cat {
+  color: var(--font-color2-);
+  background-color: var(--back-color3-);
+
+  font-weight: bold;
+  border-radius: 12px;
+  display: flex;
+  width: fit-content;
+  gap: 8px;
+  padding: 8px 12px;
+}
+.delete-cat:hover {
+  background-color: var(--warning-color-);
+  color: var(--font-color1-);
+}
+
+/* SNIPPETS */
+
+.snippet-container {
+  width: 600px;
+  padding-bottom: 8px;
+  background-color: var(--back-color1-);
+  border-radius: 8px;
+  padding: 0px 10px;
+}
+
+.snippet {
+  /* width: fit-content; */
+  display: flex;
+  align-items: center;
+  height: 60px;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.btn-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  /* border: 1px solid blue; */
+}
+.btn-block > button {
+  font-size: 14px;
+}
+.info-block {
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.snippet .title {
+  color: var(--font-color1-);
+}
+.snippet:hover .title {
+  color: var(--hover-color-);
+}
+
+.info-block > .description {
+  color: var(--font-color3-);
+}
+
+.snippet-content {
+  margin-top: 10px;
+  background-color: var(--back-color3-);
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* SNIPPETS FORMULAIRES */
+
+.snippet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.snippet-form input,
+.snippet-form textarea {
+  font-size: 20px;
+  background-color: var(--back-color2-);
+  color: var(--font-color2-);
+  padding: 2px 4px;
+  border-radius: 4px;
+  outline: none;
+}
+.snippet-form input:focus,
+.snippet-form textarea:focus {
+  background-color: var(--back-color5-);
+  color: var(--font-color4-);
+}
+
+.snippet-form input::placeholder,
+.snippet-form textarea::placeholder {
+  color: var(--font-color2-);
+  font-size: 16px;
+}
+
+.snippet-form textarea {
+  min-height: 400px;
+  font-family: monospace;
+}
+
+.snippet-form .btn-zone {
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+.snippet-form .btn-zone > button {
+  font-size: 26px;
+}
+
+.save-btn:hover {
+  color: var(--save-color-);
+}
+.delete-btn:hover {
+  color: var(--warning-color-);
+}
