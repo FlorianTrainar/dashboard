@@ -136,6 +136,7 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
       <!-- Delete Cat -->
 
       <button
+        v-if="currentCategory"
         class="delete-cat"
         @click="
           askConfirmation(`Supprimer la catégorie '${currentCategory}' ?`, () =>

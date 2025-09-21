@@ -74,15 +74,16 @@ function close() {
 }
 
 .modal-header {
-  background-color: var(--back-color2-);
+  background-color: var(--back-color3-);
   padding: 10px;
   cursor: move;
 }
 .modal {
   position: absolute;
   width: 500px;
-  background-color: var(--back-color2-);
+  background-color: var(--back-color3-);
   border-radius: 6px;
+  border: solid 1px var(--back-color4-);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }

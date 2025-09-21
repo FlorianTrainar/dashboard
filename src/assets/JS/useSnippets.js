@@ -26,8 +26,13 @@ export function useSnippets(tech) {
   }
 
   function deleteSnippet(index) {
-    filteredSnippets.value.splice(index, 1)
-    save()
+    const cat = currentCategory.value
+    const snippets = snippetsByCategory.value[cat]
+
+    if (snippets && index >= 0 && index < snippets.length) {
+      snippets.splice(index, 1)
+      save()
+    }
   }
 
   function toggleContent(index) {

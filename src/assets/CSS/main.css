@@ -3,8 +3,9 @@
 * {
   box-sizing: border-box;
 }
+
 :root {
-  --back-color1-: 14191d#;
+  --back-color1-: #14191d;
   --back-color2-: #283038;
   --back-color3-: #445566;
   --back-color4-: #6c8093;
@@ -15,9 +16,11 @@
   --font-color3-: #79838c;
   --font-color4-: #14191d;
 
-  --hover-color-: rgb(72, 182, 255);
+  --hover-color-: rgb(227, 234, 238);
   --warning-color-: rgb(219, 43, 30);
   --save-color-: rgb(51, 180, 51);
+  --active-color-: rgb(242, 205, 55);
+
   --header-width-: 180px;
 }
 
@@ -26,6 +29,7 @@ main {
   color: var(--font-color1-);
   width: 100vw;
   min-height: 100vh;
+  padding-bottom: 100px;
 }
 .wrapper {
   width: 1000px;
@@ -57,8 +61,9 @@ button:hover {
 
 .page-title {
   display: flex;
-  gap: 10px;
+  gap: 18px;
   position: relative;
+  margin-bottom: 40px;
 }
 .page-title > .open-form-btn {
   font-size: 30px;
@@ -69,13 +74,15 @@ button:hover {
 .cat-selector {
   /* border-bottom: solid 1px var(--back-color4-); */
   display: flex;
+  gap: 10px;
 }
 .cat-selector > button {
-  font-size: 20px;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .cat-selector > button.active {
-  color: var(--font-color1-);
+  color: var(--active-color-);
 }
 
 .delete-cat {
@@ -88,6 +95,7 @@ button:hover {
   width: fit-content;
   gap: 8px;
   padding: 8px 12px;
+  border: solid 1px var(--back-color4-);
 }
 .delete-cat:hover {
   background-color: var(--warning-color-);
@@ -96,10 +104,12 @@ button:hover {
 
 /* SNIPPETS */
 
-.snippet-container {
+.snippet-container,
+.project-container {
   width: 600px;
   padding-bottom: 8px;
   background-color: var(--back-color1-);
+  border: solid 1px var(--back-color3-);
   border-radius: 8px;
   padding: 0px 10px;
 }
@@ -131,18 +141,21 @@ button:hover {
   gap: 10px;
 }
 
-.snippet .title {
+.snippet .title,
+.project .title {
   color: var(--font-color1-);
 }
-.snippet:hover .title {
-  color: var(--hover-color-);
+.snippet:hover .title,
+.project:hover .title {
+  color: var(--active-color-);
 }
 
 .info-block > .description {
   color: var(--font-color3-);
 }
 
-.snippet-content {
+.snippet-content,
+.project-content {
   margin-top: 10px;
   background-color: var(--back-color3-);
   padding: 10px;
@@ -162,11 +175,13 @@ button:hover {
 .snippet-form input,
 .snippet-form textarea {
   font-size: 20px;
-  background-color: var(--back-color2-);
+  background-color: var(--back-color3-);
   color: var(--font-color2-);
   padding: 2px 4px;
   border-radius: 4px;
   outline: none;
+  border: 1px solid var(--back-color2-);
+  box-shadow: inset 0 0 5px var(--back-color1-);
 }
 .snippet-form input:focus,
 .snippet-form textarea:focus {
@@ -199,4 +214,36 @@ button:hover {
 }
 .delete-btn:hover {
   color: var(--warning-color-);
+}
+
+/* PROJECTS */
+
+.project {
+  /* width: fit-content; */
+  display: flex;
+  align-items: center;
+  height: 50px;
+  gap: 12px;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.project > button {
+  font-size: 20px;
+}
+.project > .archive-btn {
+  margin-left: auto;
+}
+
+.project-content {
+  margin-top: 0;
+}
+
+.step {
+  display: flex;
+  gap: 10px;
+}
+.step > li {
+  font-size: 22px;
+  margin-bottom: 4px;
 }

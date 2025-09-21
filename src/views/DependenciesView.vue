@@ -18,7 +18,7 @@ const snippetModal = useModal()
 const editModal = useModal()
 
 // === SNIPPETS ===
-const tech = 'Vue'
+const tech = 'Dependencies'
 const {
   currentCategory,
   snippetsByCategory,
@@ -82,7 +82,7 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
           />
         </DraggableModal>
 
-        <h1>VUE</h1>
+        <h1>Dependencies</h1>
       </div>
 
       <div class="cat-selector">
@@ -130,7 +130,7 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
               <font-awesome-icon icon="trash" />
             </button> -->
 
-        <pre v-if="snippet.show" class="snippet-content">{{ snippet.content }}</pre>
+        <p v-if="snippet.show" class="snippet-content">{{ snippet.content }}</p>
       </div>
 
       <!-- Delete Cat -->

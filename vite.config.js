@@ -13,6 +13,8 @@ export default defineConfig({
     vueDevTools(),
     VitePWA({
       registerType: 'autoUpdate',
+      manifestFilename: 'manifest.json',
+
       manifest: {
         name: 'FloBoard',
         short_name: 'FloBoard',

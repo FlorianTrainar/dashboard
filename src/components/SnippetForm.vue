@@ -14,13 +14,13 @@ const category = ref('')
 const tags = ref('') // chaîne séparée par des virgules
 
 function handleSubmit() {
-  if (!title.value || !content.value || !category.value) return
+  if (!title.value || !content.value) return
 
   emit('add-snippet', {
     title: title.value,
     description: description.value,
     content: content.value,
-    category: category.value,
+    category: category.value || 'Autre',
     tags: tags.value
       .split(',')
       .map((t) => t.trim())
@@ -42,7 +42,7 @@ function handleSubmit() {
     <input v-model="description" placeholder="Description" />
 
     <textarea v-model="content" placeholder="Contenu" required></textarea>
-    <input v-model="category" placeholder="Catégorie" required />
+    <input v-model="category" placeholder="Catégorie" />
     <input v-model="tags" placeholder="Tags (séparés par des virgules)" />
 
     <div class="btn-zone">

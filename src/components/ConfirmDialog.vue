@@ -40,6 +40,7 @@ const emit = defineEmits(['confirm', 'cancel'])
   font-size: 19px;
   padding: 2rem;
   border-radius: 8px;
+  border: solid 1px var(--back-color3-);
   width: 300px;
   text-align: center;
 }
