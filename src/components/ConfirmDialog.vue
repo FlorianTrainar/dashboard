@@ -12,8 +12,8 @@ const emit = defineEmits(['confirm', 'cancel'])
     <div class="modal-box">
       <p>{{ message }}</p>
       <div class="modal-actions">
-        <button class="delete-btn" @click="$emit('cancel')">Annuler</button>
-        <button class="save-btn" @click="$emit('confirm')">Confirmer</button>
+        <button class="back-btn" @click="$emit('cancel')">Annuler</button>
+        <button class="delete-btn" @click="$emit('confirm')">Confirmer</button>
       </div>
     </div>
   </div>

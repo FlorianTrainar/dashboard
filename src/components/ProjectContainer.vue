@@ -35,8 +35,8 @@ function addStep() {
 
 // === Basculer l'état d'une tâche
 function toggleStep(index) {
-  const step = tasks.value[index]
-  step.done = !step.done
+  const task = tasks.value[index]
+  task.done = !task.done
   tasks.value = [...tasks.value.filter((s) => !s.done), ...tasks.value.filter((s) => s.done)]
 }
 
@@ -93,13 +93,13 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
     </div>
 
     <ul class="project-content">
-      <li v-for="(step, index) in tasks" :key="index" class="step" :class="{ done: step.done }">
+      <li v-for="(task, index) in tasks" :key="index" class="task" :class="{ done: task.done }">
         <button @click="toggleStep(index)">
           <font-awesome-icon icon="check" />
         </button>
         <input
-          v-model="step.text"
-          @input="updateStepText(index, step.text)"
+          v-model="task.text"
+          @input="updateStepText(index, task.text)"
           placeholder="Nouvelle tâche"
         />
       </li>
@@ -113,39 +113,4 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
   />
 </template>
 
-<style scoped>
-.project-container {
-  margin-bottom: 30px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-.project {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.project .title {
-  flex: 1;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-.project-content {
-  margin-top: 10px;
-}
-.step {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 5px;
-}
-.step input {
-  flex: 1;
-  padding: 5px;
-}
-.step.done input {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-</style>
+<style scoped></style>

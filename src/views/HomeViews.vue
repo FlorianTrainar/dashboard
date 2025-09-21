@@ -34,6 +34,18 @@ const filteredProjects = computed(() => {
         <h1>FLOBOARD</h1>
       </div>
 
+      <!-- === FORMULAIRE D’AJOUT DE PROJET === -->
+      <ProjectForm
+        v-if="projectModal.isVisible.value"
+        @close="projectModal.close"
+        @add="
+          (p) => {
+            addProject(p)
+            projectModal.close()
+          }
+        "
+      />
+
       <!-- === SELECTEUR DE CATÉGORIES === -->
       <div class="cat-selector">
         <button
@@ -93,27 +105,15 @@ const filteredProjects = computed(() => {
       <div v-else class="no-project">
         <p>Aucun projet dans cette catégorie.</p>
       </div>
-
-      <!-- === FORMULAIRE D’AJOUT DE PROJET === -->
-      <ProjectForm
-        v-if="projectModal.isVisible.value"
-        @close="projectModal.close"
-        @add="
-          (p) => {
-            addProject(p)
-            projectModal.close()
-          }
-        "
-      />
     </div>
   </main>
 </template>
 
 <style scoped>
-.no-project {
-  margin-top: 30px;
+/* .no-project {
+  margin-top: 3000px;
   text-align: center;
   color: #888;
   font-style: italic;
-}
+} */
 </style>

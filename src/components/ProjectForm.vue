@@ -23,45 +23,21 @@ function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit" class="project-form">
-    <input v-model="title" type="text" placeholder="Nom du projet" required />
+  <div class="project-container">
+    <form @submit.prevent="submit" class="project">
+      <input v-model="title" type="text" placeholder="Nom du projet" required />
 
-    <select v-model="category">
-      <option v-for="cat in categories" :key="cat" :value="cat">
-        {{ cat.toUpperCase() }}
-      </option>
-    </select>
+      <select class="project-select" v-model="category">
+        <option v-for="cat in categories" :key="cat" :value="cat">
+          {{ cat.toUpperCase() }}
+        </option>
+      </select>
 
-    <button type="submit">
-      <font-awesome-icon icon="floppy-disk" />
-    </button>
-  </form>
+      <button type="submit" class="create-btn">
+        <font-awesome-icon icon="folder-plus" />
+      </button>
+    </form>
+  </div>
 </template>
 
-<style scoped>
-.project-form {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 10px;
-}
-
-input,
-select {
-  padding: 6px 12px;
-  font-size: 16px;
-  border: 1px solid var(--back-color4-, #ccc);
-  border-radius: 4px;
-  background-color: var(--back-color2-, #fff);
-  color: var(--font-color2-, #333);
-}
-
-button {
-  background-color: var(--accent-color-, #4caf50);
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-</style>
+<style scoped></style>

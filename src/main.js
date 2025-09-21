@@ -17,6 +17,7 @@ import {
   faClipboard,
   faEye,
   faEyeSlash,
+  faFolderPlus,
   faPencil,
   faPlusSquare,
   faSave,
@@ -40,6 +41,7 @@ library.add(
   faCircleCheck,
   faBoxArchive,
   faBoxOpen,
+  faFolderPlus,
 )
 
 const app = createApp(App)

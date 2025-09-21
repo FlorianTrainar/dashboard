@@ -141,12 +141,10 @@ button:hover {
   gap: 10px;
 }
 
-.snippet .title,
-.project .title {
+.snippet .title {
   color: var(--font-color1-);
 }
-.snippet:hover .title,
-.project:hover .title {
+.snippet:hover .title {
   color: var(--active-color-);
 }
 
@@ -215,8 +213,18 @@ button:hover {
 .delete-btn:hover {
   color: var(--warning-color-);
 }
+.back-btn:hover {
+  color: var(--active-color-);
+}
 
-/* PROJECTS */
+/* PROJECT-CONTAINER */
+
+.project-container {
+  margin-bottom: 30px;
+  padding: 16px;
+  border: 1px solid var(--back-color3-);
+  border-radius: 8px;
+}
 
 .project {
   /* width: fit-content; */
@@ -226,6 +234,18 @@ button:hover {
   gap: 12px;
   cursor: pointer;
   padding: 0 8px;
+}
+
+.project > input {
+  flex: 1;
+  color: var(--font-color2-);
+  font-size: 28px;
+  background: none;
+  border: none;
+}
+.project > input:focus {
+  outline: none;
+  color: var(--font-color1-);
 }
 
 .project > button {
@@ -239,11 +259,40 @@ button:hover {
   margin-top: 0;
 }
 
-.step {
+.task {
   display: flex;
+  align-items: center;
   gap: 10px;
+  margin-bottom: 8px;
 }
-.step > li {
-  font-size: 22px;
-  margin-bottom: 4px;
+.task input {
+  flex: 1;
+  padding: 5px;
+  background-color: var(--back-color5-);
+}
+.task.done > input {
+  text-decoration: line-through;
+  background-color: var(--back-color4-);
+  opacity: 0.6;
+}
+.task > input {
+  font-size: 18px;
+}
+.project-select {
+  height: 80%;
+  background-color: var(--back-color3-);
+  color: var(--font-color2-);
+  border-radius: 8px;
+  font-size: 16px;
+}
+.project-select:focus {
+  outline: none;
+}
+.project-container .create-btn {
+  font-size: 30px;
+  margin-left: 15px;
+}
+
+.project-container .create-btn:hover {
+  color: var(--active-color-);
 }
