@@ -1,0 +1,84 @@
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  header {
+    display: none;
+  }
+
+  .wrapper {
+    width: 90vw;
+    border: solid 1px blue;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
+
+  .page-title {
+    align-self: center;
+  }
+
+  /* cat-selector */
+  .cat-selector {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    overflow: scroll;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cat-selector > button {
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 20px;
+  }
+  .cat-selector > button.active {
+    background-color: var(--back-color3-);
+  }
+
+  /* Project */
+
+  .project-container,
+  .project-form {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 90%;
+    padding: 4px 16px 8px 16px;
+    background-color: var(--back-color1-);
+    border: 1px solid var(--back-color3-);
+    border-radius: 8px;
+  }
+  .project {
+    height: 30px;
+  }
+  .project > .title {
+    font-size: 1.35rem;
+    width: 100%;
+  }
+  .project > button {
+    font-size: 1.3rem;
+  }
+  .project > .archive-btn {
+    margin-left: 0px;
+  }
+  .task {
+    margin-bottom: 3px;
+  }
+  .task > input {
+    padding: 3px;
+    background-color: var(--back-color5-);
+    font-size: 1rem;
+  }
+
+  .project-form {
+    /* height: 300px; */
+  }
+
+  .project-form > form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .project-select {
+    height: 100%;
+    background-color: var(--back-color3-);
+    color: var(--font-color2-);
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+}

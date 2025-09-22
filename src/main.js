@@ -1,4 +1,5 @@
-import './assets/CSS/main.CSS'
+import './assets/css/main.css'
+import './assets/CSS/mobile.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -19,6 +20,7 @@ import {
   faEyeSlash,
   faFolderPlus,
   faPencil,
+  faPlus,
   faPlusSquare,
   faSave,
   faTrash,
@@ -42,6 +44,7 @@ library.add(
   faBoxArchive,
   faBoxOpen,
   faFolderPlus,
+  faPlus,
 )
 
 const app = createApp(App)

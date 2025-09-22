@@ -49,7 +49,13 @@ export function useFirebaseProjects() {
   // ✅ Ajout d'un projet
   async function addProject(project) {
     const projectsCollection = collection(db, 'projects')
-    await addDoc(projectsCollection, project)
+
+    const newProject = {
+      ...project,
+      tasks: [{ text: '', done: false }], // 👈 une tâche vide par défaut
+    }
+
+    await addDoc(projectsCollection, newProject)
   }
 
   // ✅ Mise à jour

@@ -1,23 +1,4 @@
 <script setup>
-import { useAuth } from '@/assets/JS/useAuth.js'
-
-const { user, login, logout, isLoading } = useAuth()
-
-// Pour récupérer email + password du formulaire
-const email = ref('')
-const password = ref('')
-
-const error = ref(null)
-
-async function handleLogin() {
-  error.value = null
-  try {
-    await login(email.value, password.value)
-  } catch (e) {
-    error.value = e.message || 'Erreur lors de la connexion'
-  }
-}
-
 import { ref, computed } from 'vue'
 // import { useProjects } from '@/assets/JS/useProjects.js'
 import { useFirebaseProjects } from '@/assets/JS/useFirebaseProjects'
@@ -47,110 +28,86 @@ const filteredProjects = computed(() => {
   <main>
     <div class="wrapper">
       <!-- Afficher le formulaire si pas connecté -->
-      <div v-if="!user && !isLoading">
-        <h2>Connexion</h2>
-        <form @submit.prevent="handleLogin">
-          <div>
-            <label for="email">Email</label>
-            <input id="email" v-model="email" type="email" required autocomplete="email" />
-          </div>
-          <div>
-            <label for="password">Mot de passe</label>
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              required
-              autocomplete="current-password"
-            />
-          </div>
-          <button type="submit">Se connecter</button>
-        </form>
-        <p v-if="error" style="color: red">{{ error }}</p>
+
+      <div class="page-title">
+        <h1>Floboard</h1>
+        <button class="open-form-btn" @click="projectModal.open">
+          <font-awesome-icon icon="plus" />
+          <p>New</p>
+        </button>
       </div>
 
-      <div v-else-if="user">
-        <!-- === HEADER === -->
-        <div class="page-title">
-          <button class="open-form-btn" @click="projectModal.open">
-            <font-awesome-icon icon="square-plus" />
-          </button>
-          <h1>FLOBOARD ({{ user.email }})</h1>
-          <!-- 👇 BOUTON DECONNEXION -->
-          <button class="logout-btn" @click="logout">Se déconnecter</button>
-        </div>
+      <!-- === FORMULAIRE D’AJOUT DE PROJET === -->
+      <ProjectForm
+        v-if="projectModal.isVisible.value"
+        @close="projectModal.close"
+        @add="
+          (p) => {
+            addProject(p)
+            projectModal.close()
+          }
+        "
+      />
 
-        <!-- === FORMULAIRE D’AJOUT DE PROJET === -->
-        <ProjectForm
-          v-if="projectModal.isVisible.value"
-          @close="projectModal.close"
-          @add="
-            (p) => {
-              addProject(p)
-              projectModal.close()
-            }
-          "
+      <!-- === SELECTEUR DE CATÉGORIES === -->
+
+      <div class="cat-selector">
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'all' }"
+          @click="currentCategory = 'all'"
+        >
+          ALL
+        </button>
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'projects' }"
+          @click="currentCategory = 'projects'"
+        >
+          PROJECTS
+        </button>
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'codes' }"
+          @click="currentCategory = 'codes'"
+        >
+          CODES
+        </button>
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'sci' }"
+          @click="currentCategory = 'sci'"
+        >
+          SCI
+        </button>
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'perso' }"
+          @click="currentCategory = 'perso'"
+        >
+          PERSO
+        </button>
+        <button
+          class="cat-btn"
+          :class="{ active: currentCategory === 'archives' }"
+          @click="currentCategory = 'archives'"
+        >
+          ARCHIVES
+        </button>
+      </div>
+
+      <!-- === LISTE DES PROJETS === -->
+      <div v-if="filteredProjects.length > 0">
+        <ProjectContainer
+          v-for="project in filteredProjects"
+          :key="project.id"
+          :project="project"
+          :onUpdate="updateProject"
+          :onDelete="deleteProject"
         />
-
-        <!-- === SELECTEUR DE CATÉGORIES === -->
-        <div class="cat-selector">
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'all' }"
-            @click="currentCategory = 'all'"
-          >
-            ALL
-          </button>
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'projects' }"
-            @click="currentCategory = 'projects'"
-          >
-            PROJECTS
-          </button>
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'codes' }"
-            @click="currentCategory = 'codes'"
-          >
-            CODES
-          </button>
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'sci' }"
-            @click="currentCategory = 'sci'"
-          >
-            SCI
-          </button>
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'perso' }"
-            @click="currentCategory = 'perso'"
-          >
-            PERSO
-          </button>
-          <button
-            class="cat-btn"
-            :class="{ active: currentCategory === 'archives' }"
-            @click="currentCategory = 'archives'"
-          >
-            ARCHIVES
-          </button>
-        </div>
-
-        <!-- === LISTE DES PROJETS === -->
-        <div v-if="filteredProjects.length > 0">
-          <ProjectContainer
-            v-for="project in filteredProjects"
-            :key="project.id"
-            :project="project"
-            :onUpdate="updateProject"
-            :onDelete="deleteProject"
-          />
-        </div>
-        <div v-else class="no-project">
-          <p>Aucun projet dans cette catégorie.</p>
-        </div>
+      </div>
+      <div v-else class="no-project">
+        <p>Aucun projet dans cette catégorie.</p>
       </div>
     </div>
   </main>

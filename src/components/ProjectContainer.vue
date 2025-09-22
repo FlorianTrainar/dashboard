@@ -35,12 +35,12 @@ function cancelDelete() {
 }
 
 // === Ajouter une tâche
-function addStep() {
+function addTask() {
   tasks.value.push({ text: '', done: false })
 }
 
 // === Toggle tâche
-function toggleStep(index) {
+function toggleTask(index) {
   const task = tasks.value[index]
   task.done = !task.done
   // Re-trier les tâches : non terminées d’abord
@@ -81,7 +81,7 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
 <template>
   <div class="project-container" :class="{ done: archived }">
     <div class="project">
-      <button @click="addStep">
+      <button @click="addTask">
         <font-awesome-icon icon="square-plus" />
       </button>
 
@@ -98,7 +98,7 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
 
     <ul class="project-content">
       <li v-for="(task, index) in tasks" :key="index" class="task" :class="{ done: task.done }">
-        <button @click="toggleStep(index)">
+        <button @click="toggleTask(index)">
           <font-awesome-icon icon="check" />
         </button>
         <input

@@ -2,7 +2,10 @@
 import { RouterLink, useRouter } from 'vue-router'
 import { ref } from 'vue'
 
+import { useAuth } from '@/assets/JS/useAuth'
+
 const router = useRouter()
+const { user, logout } = useAuth()
 
 const selected = ref('home')
 const subSelected = ref('')
@@ -18,6 +21,11 @@ const showMenu = (menu) => {
       router.push({ name: 'vue' }) // redirection vers la page Vue.js
     }
   }
+}
+
+function handleLogout() {
+  logout()
+  router.push({ name: 'login' })
 }
 </script>
 <template>
@@ -76,6 +84,9 @@ const showMenu = (menu) => {
           @click="showMenu('links')"
           >Links</RouterLink
         >
+      </div>
+      <div class="menu-element" v-if="user">
+        <button @click="handleLogout">Se déconnecter</button>
       </div>
     </div>
   </header>

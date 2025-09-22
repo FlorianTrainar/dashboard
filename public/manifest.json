@@ -3,6 +3,7 @@
   "short_name": "FloBoard",
   "start_url": ".",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#14191d",
   "theme_color": "#14191d",
   "icons": [

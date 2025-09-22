@@ -13,7 +13,13 @@ const localData = computed({
 })
 
 function submit() {
-  emit('update', localData.value)
+  // On crée une copie pour ne pas muter directement localData
+  const updated = { ...localData.value }
+
+  // On force la catégorie en majuscule si elle existe
+  updated.category = (updated.category || 'AUTRE').toUpperCase()
+
+  emit('update', updated)
 }
 </script>
 
@@ -22,6 +28,7 @@ function submit() {
     <input v-model="localData.title" placeholder="Titre" required />
     <input v-model="localData.description" placeholder="Description" />
     <textarea v-model="localData.content" placeholder="Contenu" required></textarea>
+    <input v-model="localData.category" placeholder="Catégorie" required />
     <input v-model="localData.tags" placeholder="Tags (séparés par des virgules)" />
 
     <div class="btn-zone">

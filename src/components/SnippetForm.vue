@@ -20,7 +20,7 @@ function handleSubmit() {
     title: title.value,
     description: description.value,
     content: content.value,
-    category: category.value || 'Autre',
+    category: category.value.toUpperCase() || 'AUTRE',
     tags: tags.value
       .split(',')
       .map((t) => t.trim())

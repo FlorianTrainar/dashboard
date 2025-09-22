@@ -23,7 +23,7 @@ function submit() {
 </script>
 
 <template>
-  <div class="project-container">
+  <div class="project-form">
     <form @submit.prevent="submit" class="project">
       <input v-model="title" type="text" placeholder="Nom du projet" required />
 

@@ -7,6 +7,7 @@ import DependenciesView from '@/views/DependenciesView.vue'
 import LinksView from '@/views/LinksView.vue'
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import LoginView from '@/components/loginView.vue'
 
 const auth = getAuth()
 
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeViews,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
     },
     {
       path: '/css',
@@ -59,7 +65,7 @@ router.beforeEach((to, from, next) => {
     if (user) {
       next()
     } else {
-      next({ name: 'home' }) // ou le nom de ta page de connexion
+      next({ name: 'login' }) // ou le nom de ta page de connexion
     }
   } else {
     next()

@@ -1,5 +1,12 @@
 @import './base.css';
 
+html {
+  font-size: 16px; /* base pour rem */
+}
+body {
+  font-size: 1rem; /* = 16px par défaut */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -18,7 +25,8 @@
 
   --hover-color-: rgb(227, 234, 238);
   --warning-color-: rgb(219, 43, 30);
-  --save-color-: rgb(51, 180, 51);
+  --save-color-: rgb(45, 157, 45);
+
   --active-color-: rgb(242, 205, 55);
 
   --header-width-: 180px;
@@ -34,17 +42,18 @@ main {
 .wrapper {
   width: 1000px;
   margin: 40px 0 0 40px;
-
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  overflow: hidden;
 }
 h1 {
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 h2 {
-  font-size: 22px;
+  font-size: 1.5rem;
 }
+
+/* buttons */
 
 button {
   background: none;
@@ -57,28 +66,59 @@ button:hover {
   cursor: pointer;
 }
 
+.open-form-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--back-color3-);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.open-form-btn:hover {
+  background-color: var(--save-color-);
+}
+.open-form-btn > p {
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 21px;
+}
+.open-form-btn > svg {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.save-btn:hover {
+  color: var(--save-color-);
+}
+.delete-btn:hover {
+  color: var(--warning-color-);
+}
+.back-btn:hover {
+  color: var(--active-color-);
+}
+
 /* PAGE TITLE */
 
 .page-title {
   display: flex;
   gap: 18px;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 .page-title > .open-form-btn {
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 /* CAT SELECTOR */
 
 .cat-selector {
-  /* border-bottom: solid 1px var(--back-color4-); */
   display: flex;
   gap: 10px;
+  margin-bottom: 40px;
+  /* margin-left: 42px; */
 }
 .cat-selector > button {
-  font-size: 22px;
-  margin-bottom: 10px;
+  font-size: 1.45rem;
 }
 
 .cat-selector > button.active {
@@ -104,14 +144,14 @@ button:hover {
 
 /* SNIPPETS */
 
-.snippet-container,
-.project-container {
+.snippet-container {
   width: 600px;
   padding-bottom: 8px;
   background-color: var(--back-color1-);
   border: solid 1px var(--back-color3-);
   border-radius: 8px;
   padding: 0px 10px;
+  margin-bottom: 10px;
 }
 
 .snippet {
@@ -131,7 +171,7 @@ button:hover {
   /* border: 1px solid blue; */
 }
 .btn-block > button {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .info-block {
   /* border: 1px solid green; */
@@ -172,8 +212,8 @@ button:hover {
 
 .snippet-form input,
 .snippet-form textarea {
-  font-size: 20px;
-  background-color: var(--back-color3-);
+  font-size: 1.25rem;
+  background-color: var(--back-color4-);
   color: var(--font-color2-);
   padding: 2px 4px;
   border-radius: 4px;
@@ -190,7 +230,7 @@ button:hover {
 .snippet-form input::placeholder,
 .snippet-form textarea::placeholder {
   color: var(--font-color2-);
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .snippet-form textarea {
@@ -204,52 +244,44 @@ button:hover {
   justify-content: space-between;
 }
 .snippet-form .btn-zone > button {
-  font-size: 26px;
-}
-
-.save-btn:hover {
-  color: var(--save-color-);
-}
-.delete-btn:hover {
-  color: var(--warning-color-);
-}
-.back-btn:hover {
-  color: var(--active-color-);
+  font-size: 1.8rem;
 }
 
 /* PROJECT-CONTAINER */
 
-.project-container {
-  margin-bottom: 30px;
-  padding: 16px;
+.project-container,
+.project-form {
+  width: 600px;
+  margin-bottom: 20px;
+  padding: 4px 16px 8px 16px;
+  background-color: var(--back-color1-);
   border: 1px solid var(--back-color3-);
   border-radius: 8px;
 }
 
 .project {
-  /* width: fit-content; */
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 50px;
   gap: 12px;
   cursor: pointer;
   padding: 0 8px;
 }
 
-.project > input {
-  flex: 1;
+.project > .title {
   color: var(--font-color2-);
-  font-size: 28px;
+  font-size: 1.75rem;
   background: none;
   border: none;
 }
-.project > input:focus {
+.project > .title:focus {
   outline: none;
   color: var(--font-color1-);
 }
 
 .project > button {
-  font-size: 20px;
+  font-size: 1.6rem;
 }
 .project > .archive-btn {
   margin-left: auto;
@@ -265,34 +297,33 @@ button:hover {
   gap: 10px;
   margin-bottom: 8px;
 }
-.task input {
+.task > input {
   flex: 1;
   padding: 5px;
   background-color: var(--back-color5-);
+  font-size: 1.125rem;
 }
 .task.done > input {
   text-decoration: line-through;
-  background-color: var(--back-color4-);
-  opacity: 0.6;
+  background-color: var(--back-color3-);
+  color: var(--font-color3-);
+  opacity: 1;
 }
-.task > input {
-  font-size: 18px;
+
+/* Project Form */
+.project-form > .project > input {
+  height: 80%;
+  border-radius: 6px;
+  font-size: 1.4rem;
 }
-.project-select {
+
+.project-form > .project > .project-select {
   height: 80%;
   background-color: var(--back-color3-);
   color: var(--font-color2-);
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1rem;
 }
-.project-select:focus {
+.project-form > .project > .project-select:focus {
   outline: none;
-}
-.project-container .create-btn {
-  font-size: 30px;
-  margin-left: 15px;
-}
-
-.project-container .create-btn:hover {
-  color: var(--active-color-);
 }
