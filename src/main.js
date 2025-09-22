@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faBoxArchive,
   faBoxOpen,
+  faCalendarCheck,
   faCheck,
   faChevronDown,
   faChevronUp,
@@ -19,6 +20,8 @@ import {
   faEye,
   faEyeSlash,
   faFolderPlus,
+  faGlobe,
+  faLaptopCode,
   faPencil,
   faPlus,
   faPlusSquare,
@@ -45,6 +48,9 @@ library.add(
   faBoxOpen,
   faFolderPlus,
   faPlus,
+  faCalendarCheck,
+  faLaptopCode,
+  faGlobe,
 )
 
 const app = createApp(App)

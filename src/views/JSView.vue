@@ -85,49 +85,16 @@ async function onDeleteCategory(cat) {
 
       <template v-else>
         <div class="page-title">
-          <button class="open-form-btn" @click="snippetModal.open">
-            <font-awesome-icon icon="square-plus" />
-          </button>
-
-          <!-- MODALE CREATION -->
-          <DraggableModal
-            :visible="snippetModal.isVisible.value"
-            title="Ajouter un snippet"
-            @close="snippetModal.close"
-          >
-            <SnippetForm :currentTech="tech" @add-snippet="onAddSnippet" />
-          </DraggableModal>
-
-          <!-- MODALE EDITION -->
-          <DraggableModal
-            :visible="editModal.isVisible.value"
-            title="Modifier le snippet"
-            @close="editModal.close"
-          >
-            <EditForm
-              v-model="editData"
-              @update="
-                () => {
-                  onEditSnippet(editIndex, editData)
-                  editModal.close()
-                }
-              "
-              @cancel="editModal.close"
-              @delete="
-                askConfirmation(`Supprimer le snippet '${editData.title}' ?`, async () => {
-                  await onDeleteSnippet(editIndex)
-                  editModal.close()
-                })
-              "
-            />
-          </DraggableModal>
-
           <h1>JavaScript</h1>
+          <button class="open-form-btn" @click="snippetModal.open">
+            <font-awesome-icon icon="plus" />
+            <p>New</p>
+          </button>
         </div>
 
         <div class="cat-selector">
           <button
-            v-for="cat in Object.keys(snippetsByCategory)"
+            v-for="cat in Object.keys(snippetsByCategory).sort((a, b) => a.localeCompare(b))"
             :key="cat"
             class="cat-btn"
             :class="{ active: cat === currentCategory }"
@@ -153,7 +120,7 @@ async function onDeleteCategory(cat) {
             </div>
             <div class="info-block">
               <h2 class="title">{{ snippet.title }}</h2>
-              <h3 class="description">{{ snippet.description }}</h3>
+              <h3 class="description">{{ snippet.category }} : {{ snippet.description }}</h3>
             </div>
           </div>
 
@@ -175,6 +142,39 @@ async function onDeleteCategory(cat) {
       </template>
     </div>
   </main>
+
+  <!-- MODALE CREATION -->
+  <DraggableModal
+    :visible="snippetModal.isVisible.value"
+    title="Ajouter un snippet"
+    @close="snippetModal.close"
+  >
+    <SnippetForm :currentTech="tech" @add-snippet="onAddSnippet" />
+  </DraggableModal>
+
+  <!-- MODALE EDITION -->
+  <DraggableModal
+    :visible="editModal.isVisible.value"
+    title="Modifier le snippet"
+    @close="editModal.close"
+  >
+    <EditForm
+      v-model="editData"
+      @update="
+        (updatedData) => {
+          onEditSnippet(editIndex, updatedData)
+          editModal.close()
+        }
+      "
+      @cancel="editModal.close"
+      @delete="
+        askConfirmation(`Supprimer le snippet '${editData.title}' ?`, async () => {
+          await onDeleteSnippet(editIndex)
+          editModal.close()
+        })
+      "
+    />
+  </DraggableModal>
 
   <ConfirmDialog
     :visible="showConfirm"

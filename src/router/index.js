@@ -5,11 +5,9 @@ import JSView from '@/views/JSView.vue'
 import VueView from '@/views/VueView.vue'
 import DependenciesView from '@/views/DependenciesView.vue'
 import LinksView from '@/views/LinksView.vue'
-
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import LoginView from '@/components/loginView.vue'
 
-const auth = getAuth()
+import { useAuth } from '@/assets/JS/useAuth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,18 +55,16 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.meta.requiresAuth // mets cette meta dans tes routes privées
+// ✅ Attendre que Firebase ait chargé la session avant chaque navigation
+router.beforeEach(async (to, from, next) => {
+  const { user, authReady } = useAuth()
+  await authReady // 👈 attend que Firebase ait répondu
 
-  if (requiresAuth) {
-    const user = auth.currentUser
-    if (user) {
-      next()
-    } else {
-      next({ name: 'login' }) // ou le nom de ta page de connexion
-    }
+  if (to.meta.requiresAuth && !user.value) {
+    next({ name: 'login' }) // si non connecté, redirige
   } else {
-    next()
+    next() // sinon continue
   }
 })
+
 export default router

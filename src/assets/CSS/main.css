@@ -7,8 +7,19 @@ body {
   font-size: 1rem; /* = 16px par défaut */
 }
 
+/* Cacher les barres de scroll sur tous les navigateurs */
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  overflow-y: scroll; /* garde le scroll vertical actif */
+}
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, iOS */
+}
+
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -54,6 +65,13 @@ h2 {
 }
 
 /* buttons */
+button,
+a,
+input,
+textarea {
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 button {
   background: none;
@@ -146,7 +164,7 @@ button:hover {
 
 .snippet-container {
   width: 600px;
-  padding-bottom: 8px;
+
   background-color: var(--back-color1-);
   border: solid 1px var(--back-color3-);
   border-radius: 8px;

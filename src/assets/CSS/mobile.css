@@ -1,13 +1,11 @@
 @media screen and (max-width: 768px) and (orientation: portrait) {
-  header {
-    display: none;
-  }
-
   .wrapper {
-    width: 90vw;
-    border: solid 1px blue;
+    width: 95vw;
+    height: 100dvh; /* 'd' = dynamic, respecte le clavier */
+
+    /* border: solid 1px blue; */
     margin: 0 auto;
-    margin-top: 25px;
+    margin-top: 15px;
   }
 
   .page-title {
@@ -18,7 +16,7 @@
   .cat-selector {
     margin: 0 auto;
     margin-bottom: 20px;
-    overflow: scroll;
+
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -49,6 +47,7 @@
   .project > .title {
     font-size: 1.35rem;
     width: 100%;
+    text-align: center;
   }
   .project > button {
     font-size: 1.3rem;
@@ -80,5 +79,18 @@
     color: var(--font-color2-);
     border-radius: 8px;
     font-size: 1rem;
+  }
+
+  /* snippets */
+
+  .snippet-container {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+
+  .delete-cat {
+    margin: 0 auto;
+    margin-top: 40px;
   }
 }

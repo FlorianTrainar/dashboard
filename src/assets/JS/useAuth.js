@@ -8,10 +8,17 @@ const user = ref(null)
 const isLoading = ref(true)
 const error = ref(null)
 
+// ✨ Nouvelle promesse pour attendre que Firebase finisse de checker l'utilisateur
+let authReadyResolve
+const authReady = new Promise((resolve) => {
+  authReadyResolve = resolve
+})
+
 // === OBSERVATEUR D'ÉTAT AUTH ===
 onAuthStateChanged(auth, (firebaseUser) => {
   user.value = firebaseUser
   isLoading.value = false
+  authReadyResolve() // 👈 Résout la promesse une fois l’état connu
 })
 
 // === FONCTION DE CONNEXION ===
@@ -42,5 +49,6 @@ export function useAuth() {
     error,
     login,
     logout,
+    authReady,
   }
 }
