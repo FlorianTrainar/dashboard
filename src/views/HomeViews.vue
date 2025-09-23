@@ -61,13 +61,6 @@ const filteredProjects = computed(() => {
         </button>
         <button
           class="cat-btn"
-          :class="{ active: currentCategory === 'projects' }"
-          @click="currentCategory = 'projects'"
-        >
-          PROJECTS
-        </button>
-        <button
-          class="cat-btn"
           :class="{ active: currentCategory === 'codes' }"
           @click="currentCategory = 'codes'"
         >
@@ -75,17 +68,17 @@ const filteredProjects = computed(() => {
         </button>
         <button
           class="cat-btn"
-          :class="{ active: currentCategory === 'sci' }"
-          @click="currentCategory = 'sci'"
+          :class="{ active: currentCategory === 'admin' }"
+          @click="currentCategory = 'admin'"
         >
-          SCI
+          ADMIN
         </button>
         <button
           class="cat-btn"
-          :class="{ active: currentCategory === 'perso' }"
-          @click="currentCategory = 'perso'"
+          :class="{ active: currentCategory === 'projets' }"
+          @click="currentCategory = 'projets'"
         >
-          PERSO
+          PROJETS
         </button>
         <button
           class="cat-btn"

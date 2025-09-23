@@ -1,7 +1,6 @@
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .wrapper {
-    width: 95vw;
-    height: 100dvh; /* 'd' = dynamic, respecte le clavier */
+    width: 100vw;
 
     /* border: solid 1px blue; */
     margin: 0 auto;
@@ -10,6 +9,19 @@
 
   .page-title {
     align-self: center;
+  }
+  .open-form-btn {
+    background-color: var(--save-color-);
+    color: var(--font-color1);
+  }
+  .archive-btn {
+    color: var(--active-color-);
+  }
+  .delete-btn {
+    color: var(--warning-color-);
+  }
+  .add-btn {
+    color: var(--save-color-light-);
   }
 
   /* cat-selector */
@@ -36,21 +48,15 @@
     margin: 0 auto;
     margin-bottom: 10px;
     width: 90%;
-    padding: 4px 16px 8px 16px;
-    background-color: var(--back-color1-);
-    border: 1px solid var(--back-color3-);
-    border-radius: 8px;
   }
-  .project {
-    height: 30px;
-  }
+
   .project > .title {
     font-size: 1.35rem;
     width: 100%;
-    text-align: center;
+    color: var(--font-color1);
   }
   .project > button {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
   .project > .archive-btn {
     margin-left: 0px;
@@ -64,21 +70,37 @@
     font-size: 1rem;
   }
 
-  .project-form {
-    /* height: 300px; */
+  .task.done > button:last-of-type > svg {
+    color: var(--warning-color-);
   }
 
-  .project-form > form {
+  /* project Form */
+
+  .project-form {
+    height: fit-content;
+    padding: 12px;
+    margin-bottom: 30px;
+  }
+
+  .project-form > .project {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: center;
+    gap: 10px;
   }
-  .project-select {
-    height: 100%;
-    background-color: var(--back-color3-);
-    color: var(--font-color2-);
-    border-radius: 8px;
-    font-size: 1rem;
+
+  .project-form > .project > div {
+    width: 100%;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  .project-form > .project .project-select {
+    padding: 6px 0;
+  }
+
+  .project-form svg {
+    color: var(--save-color-light-);
   }
 
   /* snippets */

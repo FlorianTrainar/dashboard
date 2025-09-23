@@ -39,6 +39,10 @@ function addTask() {
   tasks.value.push({ text: '', done: false })
 }
 
+function deleteTask(index) {
+  tasks.value.splice(index, 1)
+}
+
 // === Toggle tâche
 function toggleTask(index) {
   const task = tasks.value[index]
@@ -48,7 +52,7 @@ function toggleTask(index) {
 }
 
 // === Modifier texte tâche
-function updateStepText(index, newText) {
+function updateTaskText(index, newText) {
   tasks.value[index].text = newText
 }
 
@@ -81,7 +85,7 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
 <template>
   <div class="project-container" :class="{ done: archived }">
     <div class="project">
-      <button @click="addTask">
+      <button class="add-btn" @click="addTask">
         <font-awesome-icon icon="square-plus" />
       </button>
 
@@ -103,9 +107,12 @@ watch([title, tasks, archived], emitUpdate, { deep: true })
         </button>
         <input
           v-model="task.text"
-          @input="updateStepText(index, task.text)"
+          @input="updateTaskText(index, task.text)"
           placeholder="Nouvelle tâche"
         />
+        <button v-if="task.done" @click="deleteTask(index)">
+          <font-awesome-icon icon="circle-xmark" />
+        </button>
       </li>
     </ul>
 

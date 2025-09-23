@@ -248,7 +248,8 @@ header {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 80px;
+    height: 95px;
+    border-radius: 8px 8px 0 0;
   }
   .menu {
     display: flex;
@@ -270,7 +271,7 @@ header {
     background-color: var(--back-color1-);
     position: fixed;
 
-    bottom: 65px;
+    bottom: 75px;
     left: 0;
     display: flex;
     flex-direction: row;

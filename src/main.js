@@ -51,6 +51,7 @@ library.add(
   faCalendarCheck,
   faLaptopCode,
   faGlobe,
+  faCircleXmark,
 )
 
 const app = createApp(App)

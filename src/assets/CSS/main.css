@@ -36,10 +36,11 @@ body::-webkit-scrollbar {
 
   --hover-color-: rgb(227, 234, 238);
   --warning-color-: rgb(219, 43, 30);
+  --warning-color-light-: rgb(220, 68, 57);
   --save-color-: rgb(45, 157, 45);
+  --save-color-light-: rgb(104, 175, 79);
 
   --active-color-: rgb(242, 205, 55);
-
   --header-width-: 180px;
 }
 
@@ -270,7 +271,7 @@ button:hover {
 .project-container,
 .project-form {
   width: 600px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding: 4px 16px 8px 16px;
   background-color: var(--back-color1-);
   border: 1px solid var(--back-color3-);
@@ -281,7 +282,6 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
   gap: 12px;
   cursor: pointer;
   padding: 0 8px;
@@ -292,6 +292,9 @@ button:hover {
   font-size: 1.75rem;
   background: none;
   border: none;
+  padding: 6px 0;
+  text-align: center;
+  width: 100%;
 }
 .project > .title:focus {
   outline: none;
@@ -321,6 +324,19 @@ button:hover {
   background-color: var(--back-color5-);
   font-size: 1.125rem;
 }
+
+.task svg {
+  color: var(--font-color3-);
+}
+.task svg:hover {
+  color: var(--font-color1-);
+}
+.task.done > button:first-of-type svg {
+  color: var(--save-color-light-);
+}
+.task.done > button:last-of-type svg {
+  color: var(--warning-color-light-);
+}
 .task.done > input {
   text-decoration: line-through;
   background-color: var(--back-color3-);
@@ -329,19 +345,46 @@ button:hover {
 }
 
 /* Project Form */
+
+.project-form {
+  height: 65px;
+  padding: 12px;
+}
+
+.project-form > .project {
+  height: 100%;
+  /* border: solid 1px blue; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+.project-form > .project > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: solid 1px red; */
+
+  height: 100%;
+}
+.project-form svg {
+  font-size: 2rem;
+}
+
 .project-form > .project > input {
-  height: 80%;
+  height: 100%;
   border-radius: 6px;
   font-size: 1.4rem;
 }
 
-.project-form > .project > .project-select {
-  height: 80%;
+.project-form > .project .project-select {
+  height: 100%;
   background-color: var(--back-color3-);
   color: var(--font-color2-);
   border-radius: 8px;
   font-size: 1rem;
 }
-.project-form > .project > .project-select:focus {
+.project-form > .project .project-select:focus {
   outline: none;
 }

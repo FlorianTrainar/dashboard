@@ -4,9 +4,9 @@ import { ref } from 'vue'
 const emit = defineEmits(['add'])
 
 const title = ref('')
-const category = ref('projects')
+const category = ref('')
 
-const categories = ['projects', 'codes', 'sci', 'perso']
+const categories = ['codes', 'admin', 'projets']
 
 function submit() {
   if (!title.value.trim()) return
@@ -27,15 +27,17 @@ function submit() {
     <form @submit.prevent="submit" class="project">
       <input v-model="title" type="text" placeholder="Nom du projet" required />
 
-      <select class="project-select" v-model="category">
-        <option v-for="cat in categories" :key="cat" :value="cat">
-          {{ cat.toUpperCase() }}
-        </option>
-      </select>
+      <div>
+        <select class="project-select" v-model="category" required>
+          <option v-for="cat in categories" :key="cat" :value="cat">
+            {{ cat.toUpperCase() }}
+          </option>
+        </select>
 
-      <button type="submit" class="create-btn">
-        <font-awesome-icon icon="folder-plus" />
-      </button>
+        <button type="submit" class="create-btn">
+          <font-awesome-icon icon="folder-plus" />
+        </button>
+      </div>
     </form>
   </div>
 </template>
