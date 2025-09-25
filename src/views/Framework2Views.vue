@@ -7,7 +7,7 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
 import { copyToClipboard } from '@/utils/clipboard.js'
 
-const tech = 'Vue'
+const tech = 'framework2'
 const {
   snippets, // Tous les snippets bruts
   addSnippet,
@@ -96,7 +96,7 @@ watch(
   <main>
     <div class="wrapper" v-if="!isLoading && user">
       <div class="page-title">
-        <h1>Vue.js</h1>
+        <h1>Framework2</h1>
         <button class="open-form-btn" @click="addEmptySnippet">
           <font-awesome-icon icon="plus" />
           <p>Ajouter</p>

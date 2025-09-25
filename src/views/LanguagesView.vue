@@ -7,7 +7,7 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
 import { copyToClipboard } from '@/utils/clipboard.js'
 
-const tech = 'Vue'
+const tech = 'Languages'
 const {
   snippets, // Tous les snippets bruts
   addSnippet,
@@ -33,7 +33,7 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
 const { user, isLoading } = useAuth()
 
 // === Catégories fixes
-const categories = ['SETUP', 'MODULES', 'STYLE', 'DEPENDENCIES', 'AUTRE']
+const categories = ['CSS', 'JavaScript', 'HTML']
 const knownCategories = computed(() => categories.filter((cat) => cat !== 'AUTRE'))
 
 const currentCategory = ref(categories[0])
@@ -96,7 +96,7 @@ watch(
   <main>
     <div class="wrapper" v-if="!isLoading && user">
       <div class="page-title">
-        <h1>Vue.js</h1>
+        <h1>Languages</h1>
         <button class="open-form-btn" @click="addEmptySnippet">
           <font-awesome-icon icon="plus" />
           <p>Ajouter</p>

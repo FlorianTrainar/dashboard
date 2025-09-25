@@ -30,6 +30,9 @@ import {
   faTrash,
   faCirclePlus,
   faXmark,
+  faThumbsUp,
+  faPenNib,
+  faBook,
 } from '@fortawesome/free-solid-svg-icons'
 import {} from '@fortawesome/free-regular-svg-icons'
 import {} from '@fortawesome/free-brands-svg-icons'
@@ -59,6 +62,9 @@ library.add(
   faPlay,
   faPause,
   faXmark,
+  faThumbsUp,
+  faPenNib,
+  faBook,
 )
 
 const app = createApp(App)

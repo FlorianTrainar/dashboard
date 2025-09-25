@@ -2,14 +2,6 @@
 import { RouterLink, useRouter } from 'vue-router'
 import { ref } from 'vue'
 
-// import { useAuth } from '@/assets/JS/useAuth'
-// const { user, logout } = useAuth()
-
-// function handleLogout() {
-//   logout()
-//   router.push({ name: 'login' })
-// }
-
 const router = useRouter()
 
 const selected = ref('home')
@@ -21,7 +13,7 @@ const showMenu = (menu) => {
   } else {
     selected.value = menu
 
-    if (menu === 'snippets') {
+    if (menu === 'framework') {
       subSelected.value = 'vue'
       router.push({ name: 'vue' }) // redirection vers la page Vue.js
     }
@@ -45,12 +37,12 @@ const showMenu = (menu) => {
       <div class="menu-element">
         <button
           class="show-menu-btn"
-          :class="{ active: selected === 'snippets' }"
-          @click="showMenu('snippets')"
+          :class="{ active: selected === 'framework' }"
+          @click="showMenu('framework')"
         >
-          Snippets
+          Frameworks
         </button>
-        <div class="sub-menu" v-if="selected === 'snippets'">
+        <div class="sub-menu" v-if="selected === 'framework'">
           <RouterLink
             :to="{ name: 'vue' }"
             @click="subSelected = 'vue'"
@@ -58,24 +50,28 @@ const showMenu = (menu) => {
             >Vue.js</RouterLink
           >
           <RouterLink
-            @click="subSelected = 'css'"
-            :class="{ active: subSelected === 'css' }"
-            :to="{ name: 'css' }"
-            >Css</RouterLink
-          >
-          <RouterLink
-            :to="{ name: 'js' }"
-            @click="subSelected = 'js'"
-            :class="{ active: subSelected === 'js' }"
-            >JavaScript</RouterLink
-          >
-          <RouterLink
-            :to="{ name: 'dependencies' }"
-            @click="subSelected = 'dependencies'"
-            :class="{ active: subSelected === 'dependencies' }"
-            >Dependencies</RouterLink
+            @click="subSelected = 'framework2'"
+            :class="{ active: subSelected === 'framework2' }"
+            :to="{ name: 'framework2' }"
+            >framework2</RouterLink
           >
         </div>
+      </div>
+      <div class="menu-element">
+        <RouterLink
+          :to="{ name: 'languages' }"
+          :class="{ active: selected === 'languages' }"
+          @click="showMenu('languages')"
+          >Languages</RouterLink
+        >
+      </div>
+      <div class="menu-element">
+        <RouterLink
+          :to="{ name: 'notebook' }"
+          :class="{ active: selected === 'notebook' }"
+          @click="showMenu('notebook')"
+          >Notebook</RouterLink
+        >
       </div>
       <div class="menu-element">
         <RouterLink
@@ -110,12 +106,12 @@ const showMenu = (menu) => {
       <div class="menu-element">
         <button
           class="show-menu-btn"
-          :class="{ active: selected === 'snippets' }"
-          @click="showMenu('snippets')"
+          :class="{ active: selected === 'framework' }"
+          @click="showMenu('framework')"
         >
           <font-awesome-icon icon="laptop-code" />
         </button>
-        <div class="sub-menu" v-if="selected === 'snippets'">
+        <div class="sub-menu" v-if="selected === 'framework'">
           <RouterLink
             :to="{ name: 'vue' }"
             @click="subSelected = 'vue'"
@@ -123,25 +119,32 @@ const showMenu = (menu) => {
             >Vue</RouterLink
           >
           <RouterLink
-            @click="subSelected = 'css'"
-            :class="{ active: subSelected === 'css' }"
-            :to="{ name: 'css' }"
-            >Css</RouterLink
-          >
-          <RouterLink
-            :to="{ name: 'js' }"
-            @click="subSelected = 'js'"
-            :class="{ active: subSelected === 'js' }"
-            >JS</RouterLink
-          >
-          <RouterLink
-            :to="{ name: 'dependencies' }"
-            @click="subSelected = 'dependencies'"
-            :class="{ active: subSelected === 'dependencies' }"
-            >Other</RouterLink
+            @click="subSelected = 'framework2'"
+            :class="{ active: subSelected === 'framework2' }"
+            :to="{ name: 'framework2' }"
+            >framework2</RouterLink
           >
         </div>
       </div>
+
+      <div class="menu-element">
+        <RouterLink
+          :to="{ name: 'languages' }"
+          :class="{ active: selected === 'languages' }"
+          @click="showMenu('languages')"
+          ><font-awesome-icon icon="pen-nib"
+        /></RouterLink>
+      </div>
+
+      <div class="menu-element">
+        <RouterLink
+          :to="{ name: 'notebook' }"
+          :class="{ active: selected === 'notebook' }"
+          @click="showMenu('notebook')"
+          ><font-awesome-icon icon="book"
+        /></RouterLink>
+      </div>
+
       <div class="menu-element">
         <RouterLink
           :to="{ name: 'links' }"
@@ -262,7 +265,7 @@ header {
     /* border: solid 1px blue; */
   }
   .menu svg {
-    font-size: 40px;
+    font-size: 34px;
   }
   .menu-element {
     margin-bottom: 0px;

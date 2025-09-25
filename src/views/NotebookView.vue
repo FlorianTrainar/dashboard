@@ -1,13 +1,12 @@
 <script setup>
-import { ref, watch, computed, nextTick } from 'vue'
+import { watch, onMounted, nextTick } from 'vue'
 import { useAuth } from '@/assets/JS/useAuth.js'
 import { useFirebaseSnippets } from '@/assets/JS/useFirebaseSnippets'
 import { useDelete } from '@/assets/JS/useDelete'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
-import { copyToClipboard } from '@/utils/clipboard.js'
 
-const tech = 'Vue'
+const tech = 'Notebook'
 const {
   snippets, // Tous les snippets bruts
   addSnippet,
@@ -20,104 +19,74 @@ function emitUpdate(snippet) {
   if (!snippet.id) return
   editSnippet(snippet.id, {
     title: snippet.title,
-    description: snippet.description,
-    category: snippet.category,
     content: snippet.content,
   })
 }
 
-const { resizeAll, resize } = useTextareaAutoResize('.snippet-description, .snippet')
+const { resize } = useTextareaAutoResize('.snippet-description, .snippet')
 
 const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCancel } = useDelete()
 
 const { user, isLoading } = useAuth()
 
-// === Catégories fixes
-const categories = ['SETUP', 'MODULES', 'STYLE', 'DEPENDENCIES', 'AUTRE']
-const knownCategories = computed(() => categories.filter((cat) => cat !== 'AUTRE'))
-
-const currentCategory = ref(categories[0])
-
-// === Filtrage par catégorie
-const filteredSnippets = computed(() => {
-  if (currentCategory.value === 'AUTRE') {
-    return snippets.value.filter((s) => !knownCategories.value.includes(s.category))
-  }
-  return snippets.value.filter((s) => s.category === currentCategory.value)
-})
-
-// handle copy
-const copiedSnippets = ref(new Set())
-function handleCopy(snippet) {
-  copyToClipboard(snippet.content)
-    .then(() => {
-      copiedSnippets.value.add(snippet.id)
-      setTimeout(() => copiedSnippets.value.delete(snippet.id), 1000)
-    })
-    .catch(() => {
-      console.error('Erreur lors de la copie')
-    })
-}
-
-// === Ajouter un snippet vide
 async function addEmptySnippet() {
   await addSnippet({
     title: '',
     description: '',
-    category: currentCategory.value,
     content: '',
     show: false,
   })
 }
 
 async function onToggleContent(index) {
-  const snippet = filteredSnippets.value[index]
-  if (snippet) await toggleContent(snippet.id, snippet.show)
+  const snippet = snippets.value[index]
+  if (snippet) {
+    await toggleContent(snippet.id, snippet.show)
+    await nextTick()
+    const textareas = document.querySelectorAll('.snippet')
+    textareas.forEach((el) => resize(el))
+  }
 }
+function resizeVisibleTextareas() {
+  nextTick(() => {
+    const textareas = document.querySelectorAll('.snippet')
+    textareas.forEach((el) => resize(el))
+  })
+}
+watch(
+  snippets,
+  () => {
+    if (snippets.value.some((s) => s.show)) {
+      resizeVisibleTextareas()
+    }
+  },
+  { deep: true },
+)
 
 function askDeleteSnippet(snippet) {
-  askConfirmation(`Supprimer le snippet "${snippet.title || 'sans titre'}" ?`, async () => {
+  askConfirmation(`Supprimer la note "${snippet.title || 'sans titre'}" ?`, async () => {
     await deleteSnippet(snippet.id)
   })
 }
 
-// Resize automatique quand un snippet est affiché
-watch(
-  filteredSnippets,
-  async () => {
-    await nextTick()
-    resizeAll()
-  },
-  { deep: true },
-)
+onMounted(async () => {
+  resizeVisibleTextareas()
+})
 </script>
 
 <template>
   <main>
     <div class="wrapper" v-if="!isLoading && user">
       <div class="page-title">
-        <h1>Vue.js</h1>
+        <h1>Notebook</h1>
         <button class="open-form-btn" @click="addEmptySnippet">
           <font-awesome-icon icon="plus" />
           <p>Ajouter</p>
         </button>
       </div>
 
-      <!-- === Catégories fixes === -->
-      <div class="cat-selector">
-        <button
-          v-for="cat in categories"
-          :key="cat"
-          class="cat-btn"
-          :class="{ active: cat === currentCategory }"
-          @click="currentCategory = cat"
-        >
-          {{ cat }}
-        </button>
-      </div>
-
-      <!-- === Snippets filtrés === -->
-      <div class="item-container" v-for="(snippet, index) in filteredSnippets" :key="snippet.id">
+      <!-- Notes -->
+      <div class="item-container" v-for="(snippet, index) in snippets" :key="snippet.id">
         <div class="item-main" :class="{ active: snippet.show }">
           <button
             class="pause-btn"
@@ -134,45 +103,24 @@ watch(
             class="title"
           />
 
-          <button
-            @click="handleCopy(snippet)"
-            class="clipboard-btn"
-            :class="{ copied: copiedSnippets.has(snippet.id) }"
-          >
-            <font-awesome-icon :icon="copiedSnippets.has(snippet.id) ? 'thumbs-up' : 'clipboard'" />
+          <button @click="askDeleteSnippet(snippet)" class="delete-btn">
+            <font-awesome-icon icon="trash" />
           </button>
         </div>
 
         <div class="item-content" v-if="snippet.show">
-          <div class="info">
-            <textarea
-              class="snippet-description"
-              placeholder="Description"
-              rows="1"
-              v-model="snippet.description"
-              @input="
-                (e) => {
-                  resize(e.target)
-                  emitUpdate(snippet)
-                }
-              "
-            ></textarea>
-
-            <select v-model="snippet.category">
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-            </select>
-          </div>
-
           <textarea
             v-model="snippet.content"
             class="snippet"
-            placeholder="Snippet"
+            placeholder="Note"
             rows="1"
-            @input="(e) => resize(e.target)"
+            @input="
+              (e) => {
+                resize(e.target)
+                emitUpdate(snippet)
+              }
+            "
           ></textarea>
-          <button @click="askDeleteSnippet(snippet)" class="delete-btn">
-            <font-awesome-icon icon="trash" />
-          </button>
         </div>
       </div>
     </div>
@@ -219,7 +167,7 @@ textarea::placeholder {
 .info > select:hover {
   cursor: pointer;
 }
-.snippet-description,
+
 .snippet {
   flex: 1;
   padding: 5px;
@@ -240,7 +188,6 @@ textarea::placeholder {
   margin: 10px 0;
   width: 100%;
 }
-.snippet-description:focus,
 .snippet:focus {
   background-color: var(--back-color5-);
 }

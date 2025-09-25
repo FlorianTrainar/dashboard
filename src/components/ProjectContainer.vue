@@ -1,6 +1,9 @@
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import ConfirmDialog from './ConfirmDialog.vue'
+
+import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
+const { resizeAll, resize } = useTextareaAutoResize('.task-textarea')
 
 // === Props
 const props = defineProps({
@@ -63,6 +66,7 @@ function sortTasks() {
     ...tasks.value.filter((t) => !t.priority && !t.done),
     ...tasks.value.filter((t) => t.done),
   ]
+  resizeAll()
 }
 function addTask() {
   tasks.value.push({ text: '', done: false, priority: false })
@@ -102,20 +106,8 @@ function emitUpdate() {
 // === Sauvegarde automatique
 watch([title, tasks, archived], emitUpdate, { deep: true })
 
-// resized textarea
-function resizeTextarea(event) {
-  const el = event.target
-  el.style.height = 'auto'
-  el.style.height = el.scrollHeight + 'px'
-}
 onMounted(() => {
-  nextTick(() => {
-    const textareas = document.querySelectorAll('.task-textarea')
-    textareas.forEach((el) => {
-      el.style.height = 'auto'
-      el.style.height = el.scrollHeight + 'px'
-    })
-  })
+  resizeAll()
 })
 </script>
 
@@ -156,7 +148,7 @@ onMounted(() => {
 
         <textarea
           v-model="task.text"
-          @input="resizeTextarea"
+          @input="resize($event.target)"
           class="task-textarea"
           placeholder="Nouvelle tâche"
           rows="1"
