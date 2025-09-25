@@ -1,5 +1,4 @@
 import './assets/css/main.css'
-import './assets/CSS/mobile.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -22,11 +21,15 @@ import {
   faFolderPlus,
   faGlobe,
   faLaptopCode,
+  faPause,
   faPencil,
+  faPlay,
   faPlus,
   faPlusSquare,
   faSave,
   faTrash,
+  faCirclePlus,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import {} from '@fortawesome/free-regular-svg-icons'
 import {} from '@fortawesome/free-brands-svg-icons'
@@ -52,6 +55,10 @@ library.add(
   faLaptopCode,
   faGlobe,
   faCircleXmark,
+  faCirclePlus,
+  faPlay,
+  faPause,
+  faXmark,
 )
 
 const app = createApp(App)

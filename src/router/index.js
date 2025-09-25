@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeViews from '@/views/HomeViews.vue'
+import FloboardViews from '@/views/FloboardViews.vue'
 import CSSViews from '@/views/CSSViews.vue'
 import JSView from '@/views/JSView.vue'
 import VueView from '@/views/VueView.vue'
 import DependenciesView from '@/views/DependenciesView.vue'
 import LinksView from '@/views/LinksView.vue'
-import LoginView from '@/components/loginView.vue'
 
 import { useAuth } from '@/assets/JS/useAuth'
 
@@ -18,10 +18,12 @@ const router = createRouter({
       component: HomeViews,
     },
     {
-      path: '/login',
-      name: 'login',
-      component: LoginView,
+      path: '/floboard',
+      name: 'floboard',
+      component: FloboardViews,
+      meta: { requiresAuth: true },
     },
+
     {
       path: '/css',
       name: 'css',
@@ -61,7 +63,7 @@ router.beforeEach(async (to, from, next) => {
   await authReady // 👈 attend que Firebase ait répondu
 
   if (to.meta.requiresAuth && !user.value) {
-    next({ name: 'login' }) // si non connecté, redirige
+    next({ name: 'home' }) // si non connecté, redirige
   } else {
     next() // sinon continue
   }

@@ -36,9 +36,9 @@ const showMenu = (menu) => {
       </div>
       <div class="menu-element">
         <RouterLink
-          :to="{ name: 'home' }"
-          :class="{ active: selected === 'home' }"
-          @click="showMenu('home')"
+          :to="{ name: 'floboard' }"
+          :class="{ active: selected === 'floboard' }"
+          @click="showMenu('floboard')"
           >FloBoard</RouterLink
         >
       </div>
@@ -100,9 +100,9 @@ const showMenu = (menu) => {
       </div>
       <div class="menu-element">
         <RouterLink
-          :to="{ name: 'home' }"
-          :class="{ active: selected === 'home' }"
-          @click="showMenu('home')"
+          :to="{ name: 'floboard' }"
+          :class="{ active: selected === 'floboard' }"
+          @click="showMenu('floboard')"
         >
           <font-awesome-icon icon="calendar-check" />
         </RouterLink>
@@ -208,7 +208,7 @@ header {
 }
 .menu-element > a.active,
 .menu-element > button.active {
-  color: var(--active-color-);
+  color: var(--selected-color-);
 }
 
 .sub-menu {
@@ -230,7 +230,7 @@ header {
   color: var(--hover-color-);
 }
 .sub-menu > a.active {
-  color: var(--active-color-);
+  color: var(--selected-color-);
 }
 
 /* footer  */
