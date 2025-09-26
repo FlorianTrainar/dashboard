@@ -144,24 +144,18 @@ watch(
         </div>
 
         <div class="item-content" v-if="snippet.show">
-          <div class="info">
-            <textarea
-              class="snippet-description"
-              placeholder="Description"
-              rows="1"
-              v-model="snippet.description"
-              @input="
-                (e) => {
-                  resize(e.target)
-                  emitUpdate(snippet)
-                }
-              "
-            ></textarea>
-
-            <select v-model="snippet.category">
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-            </select>
-          </div>
+          <textarea
+            class="snippet-description"
+            placeholder="Description"
+            rows="1"
+            v-model="snippet.description"
+            @input="
+              (e) => {
+                resize(e.target)
+                emitUpdate(snippet)
+              }
+            "
+          ></textarea>
 
           <textarea
             v-model="snippet.content"
@@ -170,9 +164,14 @@ watch(
             rows="1"
             @input="(e) => resize(e.target)"
           ></textarea>
-          <button @click="askDeleteSnippet(snippet)" class="delete-btn">
-            <font-awesome-icon icon="trash" />
-          </button>
+          <div class="snippet-footer">
+            <select class="snippet-category" v-model="snippet.category">
+              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+            </select>
+            <button @click="askDeleteSnippet(snippet)" class="delete-btn">
+              <font-awesome-icon icon="trash" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

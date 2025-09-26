@@ -144,24 +144,18 @@ watch(
         </div>
 
         <div class="item-content" v-if="snippet.show">
-          <div class="info">
-            <textarea
-              class="snippet-description"
-              placeholder="Description"
-              rows="1"
-              v-model="snippet.description"
-              @input="
-                (e) => {
-                  resize(e.target)
-                  emitUpdate(snippet)
-                }
-              "
-            ></textarea>
-
-            <select v-model="snippet.category">
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-            </select>
-          </div>
+          <textarea
+            class="snippet-description"
+            placeholder="Description"
+            rows="1"
+            v-model="snippet.description"
+            @input="
+              (e) => {
+                resize(e.target)
+                emitUpdate(snippet)
+              }
+            "
+          ></textarea>
 
           <textarea
             v-model="snippet.content"
@@ -170,9 +164,14 @@ watch(
             rows="1"
             @input="(e) => resize(e.target)"
           ></textarea>
-          <button @click="askDeleteSnippet(snippet)" class="delete-btn">
-            <font-awesome-icon icon="trash" />
-          </button>
+          <div class="snippet-footer">
+            <select class="snippet-category" v-model="snippet.category">
+              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+            </select>
+            <button @click="askDeleteSnippet(snippet)" class="delete-btn">
+              <font-awesome-icon icon="trash" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -188,65 +187,4 @@ watch(
   />
 </template>
 
-<style scoped>
-textarea::placeholder {
-  color: var(--back-color3-);
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  gap: 6px;
-}
-.info > textarea,
-.info > select {
-  font-size: 1.1rem;
-  color: var(--font-color4-);
-}
-.info > select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: none;
-  border: none;
-  padding-right: 1rem;
-  color: var(--selected-color-);
-  font-size: 1.1rem;
-  text-align: center;
-  align-self: flex-start;
-  margin-top: 4px;
-}
-.info > select:hover {
-  cursor: pointer;
-}
-.snippet-description,
-.snippet {
-  flex: 1;
-  padding: 5px;
-  background-color: var(--back-color4-);
-
-  box-shadow: inset 0px 0px 4px var(--back-color2-);
-  border: 1px solid var(--back-color1-);
-
-  color: var(--font-color4-);
-  font-size: 1.125rem;
-  border-radius: 6px;
-  resize: none;
-  overflow: hidden;
-  min-height: 28px;
-  font-family: inherit;
-}
-.snippet {
-  margin: 10px 0;
-  width: 100%;
-}
-.snippet-description:focus,
-.snippet:focus {
-  background-color: var(--back-color5-);
-}
-
-.delete-btn {
-  font-size: 1.4rem;
-  display: flex;
-}
-</style>
+<style scoped></style>

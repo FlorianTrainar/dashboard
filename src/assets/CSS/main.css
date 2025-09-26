@@ -274,4 +274,67 @@ button:hover {
     margin-bottom: 2px;
     width: 90%;
   }
+
+  /* snippet */
+
+  textarea::placeholder {
+    color: var(--back-color3-);
+  }
+
+  .snippet-description,
+  .snippet {
+    flex: 1;
+    padding: 5px;
+    background-color: var(--back-color4-);
+
+    box-shadow: inset 0px 0px 4px var(--back-color2-);
+    border: 1px solid var(--back-color1-);
+
+    color: var(--font-color4-);
+    font-size: 1.125rem;
+    border-radius: 6px;
+    resize: none;
+    overflow: hidden;
+    min-height: 28px;
+    font-family: inherit;
+    width: 100%;
+  }
+  .snippet-description {
+    font-style: italic;
+  }
+  .snippet {
+    margin: 10px 0;
+  }
+  .snippet-description:focus,
+  .snippet:focus {
+    background-color: var(--back-color5-);
+  }
+  .snippet-footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  .delete-btn {
+    font-size: 1.4rem;
+    display: flex;
+  }
+
+  .snippet-category {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    border: none;
+    padding-right: 1rem;
+    color: var(--selected-color-);
+    font-size: 1.1rem;
+    text-align: left;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .snippet-category:hover {
+    cursor: pointer;
+  }
+  .snippet-category:focus {
+    outline: none;
+  }
 }
