@@ -21,78 +21,12 @@ const showMenu = (menu) => {
 }
 </script>
 <template>
+  <!-- Phone version -->
+
   <header>
     <div class="menu">
       <div class="logo-container">
-        <img src="../assets/img/cat-noback-icon.png" alt="logo" />
-      </div>
-      <div class="menu-element">
-        <RouterLink
-          :to="{ name: 'floboard' }"
-          :class="{ active: selected === 'floboard' }"
-          @click="showMenu('floboard')"
-          >FloBoard</RouterLink
-        >
-      </div>
-      <div class="menu-element">
-        <button
-          class="show-menu-btn"
-          :class="{ active: selected === 'framework' }"
-          @click="showMenu('framework')"
-        >
-          Frameworks
-        </button>
-        <div class="sub-menu" v-if="selected === 'framework'">
-          <RouterLink
-            :to="{ name: 'vue' }"
-            @click="subSelected = 'vue'"
-            :class="{ active: subSelected === 'vue' }"
-            >Vue.js</RouterLink
-          >
-          <RouterLink
-            @click="subSelected = 'framework2'"
-            :class="{ active: subSelected === 'framework2' }"
-            :to="{ name: 'framework2' }"
-            >framework2</RouterLink
-          >
-        </div>
-      </div>
-      <div class="menu-element">
-        <RouterLink
-          :to="{ name: 'languages' }"
-          :class="{ active: selected === 'languages' }"
-          @click="showMenu('languages')"
-          >Languages</RouterLink
-        >
-      </div>
-      <div class="menu-element">
-        <RouterLink
-          :to="{ name: 'notebook' }"
-          :class="{ active: selected === 'notebook' }"
-          @click="showMenu('notebook')"
-          >Notebook</RouterLink
-        >
-      </div>
-      <div class="menu-element">
-        <RouterLink
-          :to="{ name: 'links' }"
-          :class="{ active: selected === 'links' }"
-          @click="showMenu('links')"
-          >Links</RouterLink
-        >
-      </div>
-      <!-- <div class="menu-element" v-if="user">
-        <button @click="handleLogout">Se déconnecter</button>
-      </div> -->
-    </div>
-  </header>
-
-  <!-- Phone version -->
-
-  <footer>
-    <div class="menu">
-      <div class="logo-container">
-        <img src="../assets/img/cat-noback-icon.png" alt="logo" />
+        <img src="../assets/img/logo4.jpg" alt="logo" />
       </div>
       <div class="menu-element">
         <RouterLink
@@ -119,10 +53,10 @@ const showMenu = (menu) => {
             >Vue</RouterLink
           >
           <RouterLink
-            @click="subSelected = 'framework2'"
-            :class="{ active: subSelected === 'framework2' }"
-            :to="{ name: 'framework2' }"
-            >framework2</RouterLink
+            @click="subSelected = 'react'"
+            :class="{ active: subSelected === 'react' }"
+            :to="{ name: 'react' }"
+            >React</RouterLink
           >
         </div>
       </div>
@@ -145,7 +79,7 @@ const showMenu = (menu) => {
         /></RouterLink>
       </div>
 
-      <div class="menu-element">
+      <!-- <div class="menu-element">
         <RouterLink
           :to="{ name: 'links' }"
           :class="{ active: selected === 'links' }"
@@ -153,22 +87,19 @@ const showMenu = (menu) => {
         >
           <font-awesome-icon icon="globe" />
         </RouterLink>
-      </div>
+      </div> -->
       <!-- <div class="menu-element" v-if="user">
         <button @click="handleLogout">Se déconnecter</button>
       </div> -->
     </div>
-  </footer>
+  </header>
 </template>
 <style scoped>
-footer {
-  display: none;
-}
 header {
   background-color: var(--back-color1-);
-  min-width: var(--header-width-);
   border-right: solid 1px var(--back-color4-);
 }
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -177,32 +108,30 @@ header {
   padding: 0 10px;
 }
 
-.logo-container {
+header img {
+  width: 80px;
+  height: 80px;
   margin: 30px auto;
-  width: calc(var(--header-width-) - 100px);
-  height: calc(var(--header-width-) - 100px);
-  background-color: var(--back-color4-);
   border-radius: 50%;
-  border: solid 1px var(--font-color1-);
-  position: relative;
-}
-.logo-container > img {
-  width: 60px;
-  position: absolute;
-  top: 6px;
-  left: 9px;
+  border: solid 1px var(--back-color2--);
 }
 
 .menu-element {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .menu-element > a,
 .menu-element > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   color: var(--font-color2-);
   font-size: 26px;
   text-decoration: none;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 100%;
 }
 .menu-element > a:hover,
 .menu-element > button:hover {
@@ -212,6 +141,9 @@ header {
 .menu-element > a.active,
 .menu-element > button.active {
   color: var(--selected-color-);
+}
+.menu svg {
+  font-size: 2.2rem;
 }
 
 .sub-menu {
@@ -240,9 +172,6 @@ header {
 
 @media screen and (max-width: 768px) and (orientation: portrait) {
   header {
-    display: none;
-  }
-  footer {
     display: block;
     background-color: var(--back-color1-);
     min-width: var(--header-width-);
@@ -264,9 +193,7 @@ header {
 
     /* border: solid 1px blue; */
   }
-  .menu svg {
-    font-size: 34px;
-  }
+
   .menu-element {
     margin-bottom: 0px;
   }

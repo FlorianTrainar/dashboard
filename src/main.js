@@ -33,6 +33,15 @@ import {
   faThumbsUp,
   faPenNib,
   faBook,
+  faComputer,
+  faFolderOpen,
+  faBarsProgress,
+  faInfinity,
+  faGear,
+  faPuzzlePiece,
+  faPalette,
+  faBoxesStacked,
+  faEllipsis,
 } from '@fortawesome/free-solid-svg-icons'
 import {} from '@fortawesome/free-regular-svg-icons'
 import {} from '@fortawesome/free-brands-svg-icons'
@@ -65,6 +74,15 @@ library.add(
   faThumbsUp,
   faPenNib,
   faBook,
+  faComputer,
+  faFolderOpen,
+  faBarsProgress,
+  faInfinity,
+  faGear,
+  faPuzzlePiece,
+  faPalette,
+  faBoxesStacked,
+  faEllipsis,
 )
 
 const app = createApp(App)

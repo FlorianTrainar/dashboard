@@ -45,7 +45,6 @@ body::-webkit-scrollbar {
   --archive-color-: rgb(235, 212, 120);
 
   --active-color-: rgb(55, 158, 242);
-  --header-width-: 180px;
 }
 
 main {
@@ -56,11 +55,13 @@ main {
   padding-bottom: 100px;
 }
 .wrapper {
-  width: 1000px;
+  width: 600px;
   margin: 40px 0 0 40px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  /* border: solid 1px blue; */
 }
 h1 {
   font-size: 2.25rem;
@@ -155,26 +156,13 @@ button:hover {
 
 .page-title {
   display: flex;
+  justify-content: center;
   gap: 18px;
   position: relative;
   margin-bottom: 30px;
 }
 
 /* CAT SELECTOR */
-
-.cat-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 40px;
-  /* margin-left: 42px; */
-}
-.cat-selector > button {
-  font-size: 1.45rem;
-}
-
-.cat-selector > button.active {
-  color: var(--selected-color-);
-}
 
 .delete-cat {
   color: var(--font-color2-);
@@ -196,7 +184,7 @@ button:hover {
 /* ITEM */
 
 .item-container {
-  width: 600px;
+  width: 100%;
   margin-bottom: 10px;
   padding: 3px 14px;
   background-color: var(--back-color1-);
@@ -238,6 +226,69 @@ button:hover {
   margin-bottom: 10px;
 }
 
+/* snippet */
+
+textarea::placeholder {
+  color: var(--back-color3-);
+}
+
+.snippet-description,
+.snippet {
+  flex: 1;
+  padding: 5px;
+  background-color: var(--back-color4-);
+
+  box-shadow: inset 0px 0px 4px var(--back-color2-);
+  border: 1px solid var(--back-color1-);
+
+  color: var(--font-color4-);
+  font-size: 1.125rem;
+  border-radius: 6px;
+  resize: none;
+  overflow: hidden;
+  min-height: 28px;
+  font-family: inherit;
+  width: 100%;
+}
+.snippet-description {
+  font-style: italic;
+}
+.snippet {
+  margin: 10px 0;
+}
+.snippet-description:focus,
+.snippet:focus {
+  background-color: var(--back-color5-);
+}
+.snippet-footer {
+  display: flex;
+  justify-content: space-around;
+}
+.snippet-footer > .delete-btn {
+  font-size: 1.4rem;
+  display: flex;
+}
+
+.snippet-category {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  border: none;
+  padding-right: 1rem;
+  color: var(--selected-color-);
+  font-size: 1.1rem;
+  text-align: left;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.snippet-category:hover {
+  cursor: pointer;
+}
+.snippet-category:focus {
+  outline: none;
+}
+
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .wrapper {
     width: 100vw;
@@ -247,94 +298,22 @@ button:hover {
     margin-top: 15px;
   }
 
-  .page-title {
-    align-self: center;
-  }
-
   /* cat-selector */
   .cat-selector {
-    margin: 0 auto;
+    /* margin: 0 auto;
     margin-bottom: 20px;
 
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: wrap; */
+    /* justify-content: center; */
   }
-  .cat-selector > button {
-    font-size: 0.95rem;
-    padding: 6px 10px;
-    border-radius: 20px;
-  }
-  .cat-selector > button.active {
-    background-color: var(--back-color3-);
+  .cat-selector > .cat-btn > p {
+    font-size: 1rem;
   }
 
   /* ITEM */
   .item-container {
     margin: 0 auto;
     margin-bottom: 2px;
-    width: 90%;
-  }
-
-  /* snippet */
-
-  textarea::placeholder {
-    color: var(--back-color3-);
-  }
-
-  .snippet-description,
-  .snippet {
-    flex: 1;
-    padding: 5px;
-    background-color: var(--back-color4-);
-
-    box-shadow: inset 0px 0px 4px var(--back-color2-);
-    border: 1px solid var(--back-color1-);
-
-    color: var(--font-color4-);
-    font-size: 1.125rem;
-    border-radius: 6px;
-    resize: none;
-    overflow: hidden;
-    min-height: 28px;
-    font-family: inherit;
-    width: 100%;
-  }
-  .snippet-description {
-    font-style: italic;
-  }
-  .snippet {
-    margin: 10px 0;
-  }
-  .snippet-description:focus,
-  .snippet:focus {
-    background-color: var(--back-color5-);
-  }
-  .snippet-footer {
-    display: flex;
-    justify-content: space-around;
-  }
-  .delete-btn {
-    font-size: 1.4rem;
-    display: flex;
-  }
-
-  .snippet-category {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: none;
-    border: none;
-    padding-right: 1rem;
-    color: var(--selected-color-);
-    font-size: 1.1rem;
-    text-align: left;
-    align-self: flex-start;
-    margin-top: 4px;
-  }
-  .snippet-category:hover {
-    cursor: pointer;
-  }
-  .snippet-category:focus {
-    outline: none;
+    width: 98%;
   }
 }

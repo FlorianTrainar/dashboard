@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeViews from '@/views/HomeViews.vue'
 import FloboardViews from '@/views/FloboardViews.vue'
-import Framework2Views from '@/views/Framework2Views.vue'
+
 import VueView from '@/views/VueView.vue'
 import LinksView from '@/views/LinksView.vue'
 
 import { useAuth } from '@/assets/JS/useAuth'
 import LanguagesView from '@/views/LanguagesView.vue'
 import NotebookView from '@/views/NotebookView.vue'
+import ReactViews from '@/views/ReactViews.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,9 +26,9 @@ const router = createRouter({
     },
 
     {
-      path: '/framework2',
-      name: 'framework2',
-      component: Framework2Views,
+      path: '/react',
+      name: 'react',
+      component: ReactViews,
       meta: { requiresAuth: true },
     },
 

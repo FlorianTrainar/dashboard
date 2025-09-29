@@ -2,10 +2,20 @@
 import { ref, computed } from 'vue'
 import { useFirebaseProjects } from '@/assets/JS/useFirebaseProjects'
 import ProjectContainer from '@/components/ProjectContainer.vue'
+import AnimatedTabSelector from '@/components/AnimatedTabSelector.vue'
 
 // === CATEGORIE ACTUELLE ===
 const currentCategory = ref('codes')
 
+const categoriesList = [
+  { key: 'codes', label: 'Codes', icon: 'computer' },
+  { key: 'admin', label: 'Admin', icon: 'folder-open' },
+  { key: 'projets', label: 'Projects', icon: 'bars-progress' },
+  { key: 'all', label: 'All', icon: 'infinity' },
+  { key: 'archives', label: 'Archives', icon: 'box-archive' },
+]
+
+// Fonction pour créer un nouveau projet
 function createNewProject() {
   addProject({
     title: '',
@@ -18,17 +28,17 @@ function createNewProject() {
 // === LOGIQUE DE PROJETS ===
 const { projects, addProject, updateProject, deleteProject } = useFirebaseProjects()
 
-// === PROJETS FILTRÉS SELON CATEGORIE ===
+// === FILTRAGE DES PROJETS SELON LA CATÉGORIE ===
 const filteredProjects = computed(() => {
   if (currentCategory.value === 'all') {
     return projects.value.filter((p) => p.category !== 'archives')
   }
   return projects.value.filter((p) => p.category === currentCategory.value)
 })
+
+// === TRI DES PROJETS ===
 const sortedProjects = computed(() => {
-  const sortByTitle = (a, b) => {
-    return a.title.localeCompare(b.title, 'fr', { sensitivity: 'base' })
-  }
+  const sortByTitle = (a, b) => a.title.localeCompare(b.title, 'fr', { sensitivity: 'base' })
 
   const activeProjects = filteredProjects.value.filter((p) => p.active).sort(sortByTitle)
 
@@ -54,44 +64,7 @@ const sortedProjects = computed(() => {
       </div>
 
       <!-- === SELECTEUR DE CATÉGORIES === -->
-
-      <div class="cat-selector">
-        <button
-          class="cat-btn"
-          :class="{ active: currentCategory === 'codes' }"
-          @click="currentCategory = 'codes'"
-        >
-          CODES
-        </button>
-        <button
-          class="cat-btn"
-          :class="{ active: currentCategory === 'admin' }"
-          @click="currentCategory = 'admin'"
-        >
-          ADMIN
-        </button>
-        <button
-          class="cat-btn"
-          :class="{ active: currentCategory === 'projets' }"
-          @click="currentCategory = 'projets'"
-        >
-          PROJETS
-        </button>
-        <button
-          class="cat-btn"
-          :class="{ active: currentCategory === 'all' }"
-          @click="currentCategory = 'all'"
-        >
-          ALL
-        </button>
-        <button
-          class="cat-btn"
-          :class="{ active: currentCategory === 'archives' }"
-          @click="currentCategory = 'archives'"
-        >
-          ARCHIVES
-        </button>
-      </div>
+      <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
 
       <!-- === LISTE DES PROJETS === -->
       <div v-if="sortedProjects.length > 0">
