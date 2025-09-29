@@ -24,7 +24,7 @@ body::-webkit-scrollbar {
 
 :root {
   --back-color1-: #14191d;
-  --back-color2-: #283038;
+  --back-color2-: #15254b;
   --back-color3-: #445566;
   --back-color4-: #6c8093;
   --back-color5-: #d8dde2;
@@ -56,7 +56,7 @@ main {
 }
 .wrapper {
   width: 600px;
-  margin: 40px 0 0 40px;
+  margin-left: 40px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -152,33 +152,34 @@ button:hover {
   color: var(--active-color-);
 }
 
-/* PAGE TITLE */
+/* PAGE Header */
 
+.page-header {
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  position: fixed;
+  width: 600px;
+  background-color: var(--back-color2-);
+}
 .page-title {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   gap: 18px;
-  position: relative;
+  padding-left: 17px;
+}
+.page-title > h1 {
+  font-family:
+    'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.page-main {
+  margin-top: 130px;
   margin-bottom: 30px;
-}
-
-/* CAT SELECTOR */
-
-.delete-cat {
-  color: var(--font-color2-);
-  background-color: var(--back-color3-);
-
-  font-weight: bold;
-  border-radius: 12px;
-  display: flex;
-  width: fit-content;
-  gap: 8px;
-  padding: 8px 12px;
-  border: solid 1px var(--back-color4-);
-}
-.delete-cat:hover {
-  background-color: var(--warning-color-);
-  color: var(--font-color1-);
 }
 
 /* ITEM */
@@ -293,21 +294,11 @@ textarea::placeholder {
   .wrapper {
     width: 100vw;
 
-    /* border: solid 1px blue; */
     margin: 0 auto;
-    margin-top: 15px;
   }
 
-  /* cat-selector */
-  .cat-selector {
-    /* margin: 0 auto;
-    margin-bottom: 20px;
-
-    flex-wrap: wrap; */
-    /* justify-content: center; */
-  }
-  .cat-selector > .cat-btn > p {
-    font-size: 1rem;
+  .page-header {
+    width: 100%;
   }
 
   /* ITEM */

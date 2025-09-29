@@ -55,7 +55,7 @@ watch(
     <div class="cat-highlight" :style="highlightStyle"></div>
 
     <button
-      v-for="(cat, i) in categories"
+      v-for="cat in categories"
       :key="cat.key"
       ref="catButtons"
       class="cat-btn"
@@ -72,10 +72,11 @@ watch(
   position: relative;
   display: flex;
   background-color: var(--back-color1-);
-  border-radius: 20px;
+  border: 1px solid var(--back-color3-);
+  border-radius: 8px;
   overflow: hidden;
   width: 95%;
-  margin: 0 auto 40px;
+  margin: 0 auto;
 }
 .cat-highlight {
   position: absolute;
@@ -84,7 +85,7 @@ watch(
   left: 0;
   height: 100%;
   background-color: var(--back-color3-);
-  border-radius: 20px;
+  border-radius: 8px;
   z-index: 0;
   transition:
     transform 0.3s ease,
@@ -103,5 +104,11 @@ watch(
 }
 .cat-btn.active {
   color: var(--selected-color-);
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .cat-selector > .cat-btn {
+    font-size: 1rem;
+  }
 }
 </style>

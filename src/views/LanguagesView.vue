@@ -112,87 +112,93 @@ watch(
 <template>
   <main>
     <div class="wrapper" v-if="!isLoading && user">
-      <div class="page-title">
-        <h1>Languages</h1>
-        <button class="open-form-btn" @click="addEmptySnippet">
-          <font-awesome-icon icon="plus" />
-          <p>Ajouter</p>
-        </button>
-      </div>
-
-      <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
-
-      <div class="item-container" v-for="snippet in displayedSnippets" :key="snippet.id">
-        <div class="item-main" :class="{ active: snippet.show }">
-          <button
-            class="pause-btn"
-            :class="{ active: snippet.show }"
-            @click="onToggleContent(snippet.id)"
-          >
-            <font-awesome-icon :icon="snippet.show ? 'play' : 'pause'" />
-          </button>
-
-          <input
-            v-model="snippet.title"
-            @focus="isEditingTitle = true"
-            @blur="
-              () => {
-                isEditingTitle = false
-                emitUpdate(snippet)
-                sortSnippets()
-              }
-            "
-            @keydown.enter.prevent="
-              (event) => {
-                isEditingTitle = false
-                emitUpdate(snippet)
-                sortSnippets()
-                // enlever le focus pour déclencher blur ensuite
-                event.target.blur()
-              }
-            "
-            placeholder="Titre"
-            class="title"
-          />
-
-          <button
-            @click="handleCopy(snippet)"
-            class="clipboard-btn"
-            :class="{ copied: copiedSnippets.has(snippet.id) }"
-          >
-            <font-awesome-icon :icon="copiedSnippets.has(snippet.id) ? 'thumbs-up' : 'clipboard'" />
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Languages</h1>
+          <button class="open-form-btn" @click="addEmptySnippet">
+            <font-awesome-icon icon="plus" />
+            <p>Ajouter</p>
           </button>
         </div>
 
-        <div class="item-content" v-if="snippet.show">
-          <textarea
-            class="snippet-description"
-            placeholder="Description"
-            rows="1"
-            v-model="snippet.description"
-            @input="
-              (e) => {
-                resize(e.target)
-                emitUpdate(snippet)
-              }
-            "
-          ></textarea>
+        <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
+      </div>
 
-          <textarea
-            v-model="snippet.content"
-            class="snippet"
-            placeholder="Snippet"
-            rows="1"
-            @input="(e) => resize(e.target)"
-          ></textarea>
-
-          <div class="snippet-footer">
-            <select class="snippet-category" v-model="snippet.category">
-              <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-            </select>
-            <button @click="askDeleteSnippet(snippet)" class="delete-btn">
-              <font-awesome-icon icon="trash" />
+      <div class="page-main">
+        <div class="item-container" v-for="snippet in displayedSnippets" :key="snippet.id">
+          <div class="item-main" :class="{ active: snippet.show }">
+            <button
+              class="pause-btn"
+              :class="{ active: snippet.show }"
+              @click="onToggleContent(snippet.id)"
+            >
+              <font-awesome-icon :icon="snippet.show ? 'play' : 'pause'" />
             </button>
+
+            <input
+              v-model="snippet.title"
+              @focus="isEditingTitle = true"
+              @blur="
+                () => {
+                  isEditingTitle = false
+                  emitUpdate(snippet)
+                  sortSnippets()
+                }
+              "
+              @keydown.enter.prevent="
+                (event) => {
+                  isEditingTitle = false
+                  emitUpdate(snippet)
+                  sortSnippets()
+                  // enlever le focus pour déclencher blur ensuite
+                  event.target.blur()
+                }
+              "
+              placeholder="Titre"
+              class="title"
+            />
+
+            <button
+              @click="handleCopy(snippet)"
+              class="clipboard-btn"
+              :class="{ copied: copiedSnippets.has(snippet.id) }"
+            >
+              <font-awesome-icon
+                :icon="copiedSnippets.has(snippet.id) ? 'thumbs-up' : 'clipboard'"
+              />
+            </button>
+          </div>
+
+          <div class="item-content" v-if="snippet.show">
+            <textarea
+              class="snippet-description"
+              placeholder="Description"
+              rows="1"
+              v-model="snippet.description"
+              @input="
+                (e) => {
+                  resize(e.target)
+                  emitUpdate(snippet)
+                }
+              "
+            ></textarea>
+
+            <textarea
+              v-model="snippet.content"
+              class="snippet"
+              placeholder="Snippet"
+              rows="1"
+              @input="(e) => resize(e.target)"
+            ></textarea>
+
+            <div class="snippet-footer">
+              <select class="snippet-category" v-model="snippet.category">
+                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+              </select>
+              <button @click="askDeleteSnippet(snippet)" class="delete-btn">
+                <font-awesome-icon icon="trash" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

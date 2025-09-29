@@ -51,23 +51,24 @@ const sortedProjects = computed(() => {
 <template>
   <main>
     <div class="wrapper">
-      <div class="page-title">
-        <h1>Floboard</h1>
-        <button
-          v-if="currentCategory !== 'all' && currentCategory !== 'archives'"
-          class="open-form-btn"
-          @click="createNewProject"
-        >
-          <font-awesome-icon icon="plus" />
-          <p>New</p>
-        </button>
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Floboard</h1>
+          <button
+            v-if="currentCategory !== 'all' && currentCategory !== 'archives'"
+            class="open-form-btn"
+            @click="createNewProject"
+          >
+            <font-awesome-icon icon="plus" />
+            <p>New</p>
+          </button>
+        </div>
+
+        <!-- === SELECTEUR DE CATÉGORIES === -->
+        <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
       </div>
-
-      <!-- === SELECTEUR DE CATÉGORIES === -->
-      <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
-
       <!-- === LISTE DES PROJETS === -->
-      <div v-if="sortedProjects.length > 0">
+      <div class="page-main" v-if="sortedProjects.length > 0">
         <ProjectContainer
           v-for="project in sortedProjects"
           :key="project.id"

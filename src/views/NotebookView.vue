@@ -77,50 +77,54 @@ onMounted(async () => {
 <template>
   <main>
     <div class="wrapper" v-if="!isLoading && user">
-      <div class="page-title">
-        <h1>Notebook</h1>
-        <button class="open-form-btn" @click="addEmptySnippet">
-          <font-awesome-icon icon="plus" />
-          <p>Ajouter</p>
-        </button>
-      </div>
-
-      <!-- Notes -->
-      <div class="item-container" v-for="(snippet, index) in snippets" :key="snippet.id">
-        <div class="item-main" :class="{ active: snippet.show }">
-          <button
-            class="pause-btn"
-            :class="{ active: snippet.show }"
-            @click="onToggleContent(index)"
-          >
-            <font-awesome-icon :icon="snippet.show ? 'play' : 'pause'" />
-          </button>
-
-          <input
-            v-model="snippet.title"
-            @input="() => emitUpdate(snippet)"
-            placeholder="Titre"
-            class="title"
-          />
-
-          <button @click="askDeleteSnippet(snippet)" class="delete-btn">
-            <font-awesome-icon icon="trash" />
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Notebook</h1>
+          <button class="open-form-btn" @click="addEmptySnippet">
+            <font-awesome-icon icon="plus" />
+            <p>Ajouter</p>
           </button>
         </div>
+      </div>
 
-        <div class="item-content" v-if="snippet.show">
-          <textarea
-            v-model="snippet.content"
-            class="snippet"
-            placeholder="Note"
-            rows="1"
-            @input="
-              (e) => {
-                resize(e.target)
-                emitUpdate(snippet)
-              }
-            "
-          ></textarea>
+      <div class="page-main">
+        <!-- Notes -->
+        <div class="item-container" v-for="(snippet, index) in snippets" :key="snippet.id">
+          <div class="item-main" :class="{ active: snippet.show }">
+            <button
+              class="pause-btn"
+              :class="{ active: snippet.show }"
+              @click="onToggleContent(index)"
+            >
+              <font-awesome-icon :icon="snippet.show ? 'play' : 'pause'" />
+            </button>
+
+            <input
+              v-model="snippet.title"
+              @input="() => emitUpdate(snippet)"
+              placeholder="Titre"
+              class="title"
+            />
+
+            <button @click="askDeleteSnippet(snippet)" class="delete-btn">
+              <font-awesome-icon icon="trash" />
+            </button>
+          </div>
+
+          <div class="item-content" v-if="snippet.show">
+            <textarea
+              v-model="snippet.content"
+              class="snippet"
+              placeholder="Note"
+              rows="1"
+              @input="
+                (e) => {
+                  resize(e.target)
+                  emitUpdate(snippet)
+                }
+              "
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -137,6 +141,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.page-header {
+  height: 80px;
+}
+.page-main {
+  margin-top: 80px;
+}
+
 textarea::placeholder {
   color: var(--back-color3-);
 }
