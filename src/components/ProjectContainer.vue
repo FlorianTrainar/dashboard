@@ -46,6 +46,10 @@ const active = ref(typeof props.project.active === 'boolean' ? props.project.act
 function toggleProjectActive() {
   active.value = !active.value
   emitUpdate()
+
+  if (active.value) {
+    resizeAll()
+  }
 }
 
 // === Archiver / désarchiver
