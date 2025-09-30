@@ -190,7 +190,12 @@ watch(
               class="snippet"
               placeholder="Snippet"
               rows="1"
-              @input="(e) => resize(e.target)"
+              @input="
+                (e) => {
+                  resize(e.target)
+                  emitUpdate(snippet)
+                }
+              "
             ></textarea>
 
             <div class="snippet-footer">

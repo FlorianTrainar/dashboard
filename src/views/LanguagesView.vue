@@ -29,14 +29,14 @@ const { showConfirm, confirmMessage, askConfirmation, handleConfirm, handleCance
 const { user, isLoading } = useAuth()
 
 const categoriesList = [
-  { key: 'CSS', label: 'CSS', icon: 'palette' },
+  { key: 'TAILWIND', label: 'Tailwind', icon: 'palette' },
   { key: 'JS', label: 'JavaScript', icon: 'gear' },
   { key: 'HTML', label: 'HTML', icon: 'puzzle-piece' },
 ]
 
 const categories = categoriesList.map((cat) => cat.key)
 const knownCategories = computed(() => categories.filter((cat) => cat !== 'AUTRE'))
-const currentCategory = ref('CSS')
+const currentCategory = ref('TAILWIND')
 
 const isEditingTitle = ref(false)
 
@@ -188,7 +188,12 @@ watch(
               class="snippet"
               placeholder="Snippet"
               rows="1"
-              @input="(e) => resize(e.target)"
+              @input="
+                (e) => {
+                  resize(e.target)
+                  emitUpdate(snippet)
+                }
+              "
             ></textarea>
 
             <div class="snippet-footer">
