@@ -78,19 +78,6 @@ const showMenu = (menu) => {
           ><font-awesome-icon icon="book"
         /></RouterLink>
       </div>
-
-      <!-- <div class="menu-element">
-        <RouterLink
-          :to="{ name: 'links' }"
-          :class="{ active: selected === 'links' }"
-          @click="showMenu('links')"
-        >
-          <font-awesome-icon icon="globe" />
-        </RouterLink>
-      </div> -->
-      <!-- <div class="menu-element" v-if="user">
-        <button @click="handleLogout">Se déconnecter</button>
-      </div> -->
     </div>
   </header>
 </template>
@@ -98,6 +85,9 @@ const showMenu = (menu) => {
 header {
   background-color: var(--back-color1-);
   border-right: solid 1px var(--back-color4-);
+  position: fixed;
+  height: 100vh;
+  width: var(--header-width-);
 }
 
 .menu {

@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/assets/JS/useAuth'
 
-const { login, isLoading } = useAuth()
+const { login, isLoading, user } = useAuth()
 const router = useRouter()
 
 const email = ref('')
@@ -19,6 +19,12 @@ async function handleLogin() {
     error.value = e.message || 'Erreur lors de la connexion'
   }
 }
+
+onMounted(() => {
+  if (user) {
+    router.push({ name: 'floboard' })
+  }
+})
 </script>
 
 <template>

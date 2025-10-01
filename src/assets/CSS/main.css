@@ -1,14 +1,11 @@
 @import './base.css';
 
 html {
-  font-size: 16px; /* base pour rem */
-}
-body {
-  font-size: 1rem; /* = 16px par défaut */
+  font-size: 16px;
 }
 
-/* Cacher les barres de scroll sur tous les navigateurs */
 body {
+  font-size: 1rem;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   overflow-y: scroll; /* garde le scroll vertical actif */
@@ -24,7 +21,7 @@ body::-webkit-scrollbar {
 
 :root {
   --back-color1-: #14191d;
-  --back-color2-: #15254b;
+  --back-color2-: #1b2143;
   --back-color3-: #445566;
   --back-color4-: #6c8093;
   --back-color5-: #d8dde2;
@@ -45,6 +42,8 @@ body::-webkit-scrollbar {
   --archive-color-: rgb(235, 212, 120);
 
   --active-color-: rgb(55, 158, 242);
+
+  --header-width-: 100px;
 }
 
 main {
@@ -53,6 +52,7 @@ main {
   width: 100vw;
   min-height: 100vh;
   padding-bottom: 100px;
+  margin-left: var(--header-width-);
 }
 .wrapper {
   width: 600px;
@@ -138,6 +138,7 @@ button:hover {
 }
 .archive-btn {
   color: var(--archive-color-);
+  padding: 0 8px;
 }
 .clipboard-btn {
   transition: color 0.3s ease;
@@ -186,8 +187,8 @@ button:hover {
 
 .item-container {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 3px 14px;
+  margin-bottom: 2px;
+  padding: 2px 2px;
   background-color: var(--back-color1-);
   border: 1px solid var(--back-color3-);
   border-radius: 8px;
@@ -196,17 +197,17 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 0px;
   cursor: pointer;
   padding: 0 8px;
 }
 .item-main > .title {
   color: var(--font-color2-);
-  font-size: 1.45rem;
+  font-size: 1.15rem;
   background: none;
   border: none;
   padding: 6px 0;
-  text-align: left;
+  padding-left: 10px;
   width: 100%;
 }
 .item-main > .title:focus {
@@ -216,7 +217,7 @@ button:hover {
   color: var(--font-color1-);
 }
 .item-main > button {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
 }
 
 .item-content {
@@ -224,7 +225,6 @@ button:hover {
   padding: 10px;
   border-radius: 6px;
   width: 100%;
-  margin-bottom: 10px;
 }
 
 /* snippet */
@@ -295,6 +295,9 @@ textarea::placeholder {
     width: 100vw;
 
     margin: 0 auto;
+  }
+  main {
+    margin-left: 0;
   }
 
   .page-header {

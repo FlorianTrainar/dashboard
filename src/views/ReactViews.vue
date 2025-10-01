@@ -129,6 +129,16 @@ watch(
         <div class="item-container" v-for="snippet in displayedSnippets" :key="snippet.id">
           <div class="item-main" :class="{ active: snippet.show }">
             <button
+              @click="handleCopy(snippet)"
+              class="clipboard-btn"
+              :class="{ copied: copiedSnippets.has(snippet.id) }"
+            >
+              <font-awesome-icon
+                :icon="copiedSnippets.has(snippet.id) ? 'thumbs-up' : 'clipboard'"
+              />
+            </button>
+
+            <button
               class="pause-btn"
               :class="{ active: snippet.show }"
               @click="onToggleContent(snippet.id)"
@@ -158,16 +168,6 @@ watch(
               placeholder="Titre"
               class="title"
             />
-
-            <button
-              @click="handleCopy(snippet)"
-              class="clipboard-btn"
-              :class="{ copied: copiedSnippets.has(snippet.id) }"
-            >
-              <font-awesome-icon
-                :icon="copiedSnippets.has(snippet.id) ? 'thumbs-up' : 'clipboard'"
-              />
-            </button>
           </div>
 
           <div class="item-content" v-if="snippet.show">
