@@ -30,8 +30,9 @@ const { user, isLoading } = useAuth()
 
 const categoriesList = [
   { key: 'TAILWIND', label: 'Tailwind', icon: 'palette' },
-  { key: 'JS', label: 'JavaScript', icon: 'gear' },
-  { key: 'HTML', label: 'HTML', icon: 'puzzle-piece' },
+    { key: 'RN', label: 'React Native', icon: 'puzzle-piece' },
+    { key: 'JS', label: 'JavaScript', icon: 'gear' },
+    { key: 'HTML', label: 'HTML', icon: 'puzzle-piece' },
 ]
 
 const categories = categoriesList.map((cat) => cat.key)
