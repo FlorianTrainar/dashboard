@@ -1,7 +1,6 @@
 <script setup>
 import { initClient } from '@/firebaseClients'
 import { useRouter } from 'vue-router'
-import { clients } from '@/config/clients'
 
 const router = useRouter()
 
