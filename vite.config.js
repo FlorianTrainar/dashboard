@@ -1,5 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
 
+import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import AutoImport from 'unplugin-auto-import/vite'
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -9,6 +14,25 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   plugins: [
+    Components({
+      resolvers: [
+        IconsResolver({
+          prefix: 'i',
+        }),
+      ],
+    }),
+    AutoImport({
+      resolvers: [
+        IconsResolver({
+          prefix: 'i', // important → i-lucide-xxx
+        }),
+      ],
+    }),
+
+    Icons({
+      autoInstall: true,
+    }),
+
     vue(),
     vueDevTools(),
     VitePWA({

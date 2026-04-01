@@ -3,12 +3,12 @@ import { ref, computed, watch } from 'vue'
 import { useAuth } from '@/assets/JS/useAuth.js'
 import { useFirebaseSnippets } from '@/assets/JS/useFirebaseSnippets'
 import { useDelete } from '@/assets/JS/useDelete'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
 import { copyToClipboard } from '@/utils/clipboard.js'
-import AnimatedTabSelector from '@/components/AnimatedTabSelector.vue'
+import AnimatedTabSelector from '@/components/legacy/AnimatedTabSelector.vue'
 
-const tech = 'React'
+const tech = 'Vue'
 const { snippets, addSnippet, deleteSnippet, editSnippet, toggleContent } =
   useFirebaseSnippets(tech)
 
@@ -116,7 +116,7 @@ watch(
     <div class="wrapper" v-if="!isLoading && user">
       <div class="page-header">
         <div class="page-title">
-          <h1>React</h1>
+          <h1>Vue.js</h1>
           <button class="open-form-btn" @click="addEmptySnippet">
             <font-awesome-icon icon="plus" />
             <p>Ajouter</p>
@@ -125,6 +125,7 @@ watch(
 
         <AnimatedTabSelector v-model="currentCategory" :categories="categoriesList" />
       </div>
+
       <div class="page-main">
         <div class="item-container" v-for="snippet in displayedSnippets" :key="snippet.id">
           <div class="item-main" :class="{ active: snippet.show }">

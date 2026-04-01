@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useFirebaseProjects } from '@/assets/JS/useFirebaseProjects'
-import ProjectContainer from '@/components/ProjectContainer.vue'
-import AnimatedTabSelector from '@/components/AnimatedTabSelector.vue'
+import ProjectContainer from '@/components/dashboard/ProjectContainer.vue'
+import AnimatedTabSelector from '@/components/legacy/AnimatedTabSelector.vue'
 
 // === CATEGORIE ACTUELLE ===
 const currentCategory = ref('codes')

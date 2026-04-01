@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply text-base;
+}
+
+body {
+  @apply text-base overflow-y-scroll bg-slate-950 text-white;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  @apply box-border;
+  -webkit-tap-highlight-color: transparent;
+}
+
+main {
+  @apply pt-20 pb-24 mx-auto;
+}
+
+.wrapper {
+  @apply w-[600px];
+}
+
+/* Legacy */
+
+button,
+a,
+input,
+textarea {
+  @apply select-none;
+}
+
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+  @apply outline-none;
+}
+
+.open-form-btn {
+  @apply flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-white bg-green-600;
+}
+
+.close-form-btn {
+  @apply flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-white bg-red-600;
+}
+
+.open-form-btn > p,
+.close-form-btn {
+  @apply text-base font-bold leading-5;
+}
+
+.open-form-btn > svg,
+.close-form-btn > svg {
+  @apply text-xl font-bold;
+}
+
+.save-btn {
+  @apply text-green-600;
+}
+
+.delete-btn {
+  @apply text-red-600;
+}
+
+.add-btn {
+  @apply text-green-400;
+}
+
+.archive-btn {
+  @apply text-yellow-300 px-2;
+}
+
+.clipboard-btn {
+  @apply text-yellow-300 transition-colors duration-300;
+}
+
+.clipboard-btn.copied {
+  @apply text-blue-400;
+}
+
+.pause-btn.active {
+  @apply text-blue-400;
+}
+
+.page-header {
+  @apply h-[130px] flex flex-col justify-center gap-5 fixed w-[600px] bg-slate-800;
+}
+
+.page-title {
+  @apply flex items-center gap-4 pl-4;
+}
+
+.item-container {
+  @apply w-full mb-0.5 p-0.5 bg-slate-900 border border-slate-600 rounded-lg;
+}
+
+.item-main {
+  @apply flex items-center justify-center px-2 cursor-pointer;
+}
+
+.item-main > .title {
+  @apply w-full pl-2.5 py-1.5 bg-transparent text-gray-400 text-lg outline-none;
+}
+
+.item-main.active > .title {
+  @apply text-white;
+}
+
+.item-main > button {
+  @apply text-lg;
+}
+
+.item-content {
+  @apply bg-slate-600 p-2.5 rounded-md w-full;
+}
+
+textarea::placeholder {
+  @apply text-slate-600;
+}
+
+.snippet-description,
+.snippet {
+  @apply flex-1 p-1 bg-slate-500 border border-slate-900 text-slate-900 text-lg rounded-md resize-none overflow-hidden min-h-[28px] w-full shadow-inner;
+}
+
+.snippet-description {
+  @apply italic;
+}
+
+.snippet {
+  @apply my-2.5;
+}
+
+.snippet-description:focus,
+.snippet:focus {
+  @apply bg-slate-200;
+}
+
+.snippet-footer {
+  @apply flex justify-around;
+}
+
+.snippet-footer > .delete-btn {
+  @apply text-xl flex;
+}
+
+.snippet-category {
+  @apply appearance-none bg-transparent border-none pr-4 text-yellow-400 text-base text-left self-start mt-1 outline-none cursor-pointer;
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .wrapper {
+    @apply w-screen mx-auto;
+  }
+
+  main {
+    @apply ml-0;
+  }
+
+  .page-header {
+    @apply w-full;
+  }
+
+  .item-container {
+    @apply w-[98%] mx-auto mb-0.5;
+  }
+}

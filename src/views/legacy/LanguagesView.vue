@@ -3,10 +3,10 @@ import { ref, computed, watch } from 'vue'
 import { useAuth } from '@/assets/JS/useAuth.js'
 import { useFirebaseSnippets } from '@/assets/JS/useFirebaseSnippets'
 import { useDelete } from '@/assets/JS/useDelete'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
 import { copyToClipboard } from '@/utils/clipboard.js'
-import AnimatedTabSelector from '@/components/AnimatedTabSelector.vue'
+import AnimatedTabSelector from '@/components/legacy/AnimatedTabSelector.vue'
 
 const tech = 'Languages'
 const { snippets, addSnippet, deleteSnippet, editSnippet, toggleContent } =
@@ -30,9 +30,9 @@ const { user, isLoading } = useAuth()
 
 const categoriesList = [
   { key: 'TAILWIND', label: 'Tailwind', icon: 'palette' },
-    { key: 'RN', label: 'React Native', icon: 'puzzle-piece' },
-    { key: 'JS', label: 'JavaScript', icon: 'gear' },
-    { key: 'HTML', label: 'HTML', icon: 'puzzle-piece' },
+  { key: 'RN', label: 'React Native', icon: 'puzzle-piece' },
+  { key: 'JS', label: 'JavaScript', icon: 'gear' },
+  { key: 'HTML', label: 'HTML', icon: 'puzzle-piece' },
 ]
 
 const categories = categoriesList.map((cat) => cat.key)

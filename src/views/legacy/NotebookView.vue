@@ -3,7 +3,7 @@ import { watch, onMounted, nextTick } from 'vue'
 import { useAuth } from '@/assets/JS/useAuth.js'
 import { useFirebaseSnippets } from '@/assets/JS/useFirebaseSnippets'
 import { useDelete } from '@/assets/JS/useDelete'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 import { useTextareaAutoResize } from '@/assets/JS/useTextareaAutoResize.js'
 
 const tech = 'Notebook'

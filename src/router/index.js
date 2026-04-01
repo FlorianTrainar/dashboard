@@ -1,14 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeViews from '@/views/HomeViews.vue'
-import FloboardViews from '@/views/FloboardViews.vue'
-
-import VueView from '@/views/VueView.vue'
-import LinksView from '@/views/LinksView.vue'
 
 import { useAuth } from '@/assets/JS/useAuth'
-import LanguagesView from '@/views/LanguagesView.vue'
-import NotebookView from '@/views/NotebookView.vue'
-import ReactViews from '@/views/ReactViews.vue'
+
+import ClientAdminView from '@/views/ClientAdminView.vue'
+import DdcoreenAdminView from '@/views/clients/DdcoreenAdminView.vue'
+
+import DashboardView from '@/views/DashboardView.vue'
+
+// Legacy
+
+import VueView from '@/views/legacy/VueView.vue'
+
+import LanguagesView from '@/views/legacy/LanguagesView.vue'
+import ReactViews from '@/views/legacy/ReactViews.vue'
+import NotebookView from '@/views/legacy/NotebookView.vue'
+import SnippetView from '@/views/SnippetView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,11 +26,33 @@ const router = createRouter({
       component: HomeViews,
     },
     {
-      path: '/floboard',
-      name: 'floboard',
-      component: FloboardViews,
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
       meta: { requiresAuth: true },
     },
+    {
+      path: '/snippet',
+      name: 'snippet',
+      component: SnippetView,
+      meta: { requiresAuth: true },
+    },
+
+    {
+      path: '/client-admin',
+      name: 'client-admin',
+      component: ClientAdminView,
+      meta: { requiresAuth: true },
+    },
+
+    {
+      path: '/ddcoreen-admin',
+      name: 'ddcoreen-admin',
+      component: DdcoreenAdminView,
+      meta: { requiresAuth: true },
+    },
+
+    // LEGACY
 
     {
       path: '/react',
@@ -48,13 +77,6 @@ const router = createRouter({
       path: '/notebook',
       name: 'notebook',
       component: NotebookView,
-      meta: { requiresAuth: true },
-    },
-
-    {
-      path: '/links',
-      name: 'links',
-      component: LinksView,
       meta: { requiresAuth: true },
     },
   ],
