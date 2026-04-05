@@ -10,11 +10,6 @@ import DashboardView from '@/views/DashboardView.vue'
 
 // Legacy
 
-import VueView from '@/views/legacy/VueView.vue'
-
-import LanguagesView from '@/views/legacy/LanguagesView.vue'
-import ReactViews from '@/views/legacy/ReactViews.vue'
-import NotebookView from '@/views/legacy/NotebookView.vue'
 import SnippetView from '@/views/SnippetView.vue'
 
 const router = createRouter({
@@ -49,34 +44,6 @@ const router = createRouter({
       path: '/ddcoreen-admin',
       name: 'ddcoreen-admin',
       component: DdcoreenAdminView,
-      meta: { requiresAuth: true },
-    },
-
-    // LEGACY
-
-    {
-      path: '/react',
-      name: 'react',
-      component: ReactViews,
-      meta: { requiresAuth: true },
-    },
-
-    {
-      path: '/vue',
-      name: 'vue',
-      component: VueView,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/languages',
-      name: 'languages',
-      component: LanguagesView,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/notebook',
-      name: 'notebook',
-      component: NotebookView,
       meta: { requiresAuth: true },
     },
   ],
