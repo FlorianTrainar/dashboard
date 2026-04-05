@@ -12,7 +12,7 @@ import CategoryNavigator from '@/components/ui/CategoryNavigator.vue'
 
 import { useSwipe } from '@/assets/JS/useSwipe'
 
-import snippetList from '@/components/snippets/snippetList.vue'
+import SnippetList from '@/components/snippets/SnippetList.vue'
 
 import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 
