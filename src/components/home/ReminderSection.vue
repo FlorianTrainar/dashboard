@@ -3,7 +3,6 @@ import { useTaskUtils } from '@/assets/JS/useTaskUtils'
 import { formatSmartDate } from '@/utils/formatDate'
 
 const props = defineProps({
-  title: String,
   reminders: Array,
   type: String, // 'overdue' | 'today' | 'upcoming'
   formatDate: Function,
@@ -16,12 +15,13 @@ const emit = defineEmits(['open'])
 </script>
 
 <template>
+  <!-- EMPTY STATE -->
+  <div v-if="!reminders.length" class="flex flex-col items-center gap-2 py-2 text-lime-400/70">
+    <i-heroicons-check-circle class="w-8 h-8 opacity-50" />
+    <p v-if="type === 'today'">Tout est fait pour aujourd’hui !</p>
+    <p v-else>Aucune tâche à venir !</p>
+  </div>
   <div v-if="reminders.length">
-    <!-- TITLE -->
-    <h2 class="text-lg font-semibold text-center text-white mb-2">
-      {{ title }}
-    </h2>
-
     <!-- LIST -->
     <div class="flex flex-col items-center gap-2">
       <button

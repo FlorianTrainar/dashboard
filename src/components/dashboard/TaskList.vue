@@ -168,12 +168,12 @@ defineExpose({
       <!-- Header -->
       <div
         v-if="!task.done"
-        class="flex items-center justify-between py-1.5 px-2 border-b border-slate-400/50"
+        class="flex items-center justify-between py-1.5 px-2 border-b border-slate-400/50 bg-slate-900/90"
       >
         <!-- DEADLINE -->
         <div class="flex items-center gap-2">
           <button @click="openTaskDialog(task)">
-            <i-heroicons-cog-6-tooth class="w-6 h-6" />
+            <i-heroicons-pencil-square class="text-lg" />
           </button>
 
           <p :class="!task.done ? getTaskClass(task.deadline, 'text') : ''">
@@ -219,7 +219,7 @@ defineExpose({
           rows="1"
           placeholder="Nouvelle tâche"
           class="block task-textarea w-full px-2 py-1"
-          :class="task.done ? 'bg-slate-800 text-slate-500' : 'bg-slate-800 text-slate-50'"
+          :class="task.done ? 'bg-slate-800 text-slate-500' : 'bg-slate-600 text-slate-50'"
         />
       </div>
     </li>

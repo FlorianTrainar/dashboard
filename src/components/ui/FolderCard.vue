@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import SelectDialog from './SelectDialog.vue'
+import { capitalize } from 'vue'
 
 const props = defineProps({
   id: String,
@@ -10,9 +11,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  openId: String,
 })
 
-const emit = defineEmits(['open', 'delete', 'update:title', 'update:category'])
+const emit = defineEmits(['open', 'delete', 'update:title', 'update:category', 'toggle-menu'])
 
 // STATE
 const isEditing = ref(false)
@@ -20,73 +22,99 @@ const localTitle = ref(props.title || '')
 const showCategoryModal = ref(false)
 const selectedCategory = ref(props.category)
 
-// sync si props change
+const isMenuOpen = computed(() => props.openId === props.id)
+
+// sync props
 watch(
   () => props.title,
-  (val) => {
-    localTitle.value = val || ''
-  },
+  (val) => (localTitle.value = val || ''),
 )
 watch(
   () => props.category,
-  (val) => {
-    selectedCategory.value = val
-  },
+  (val) => (selectedCategory.value = val),
 )
+
 watch(selectedCategory, (val) => {
   if (val !== props.category) {
     emit('update:category', val)
   }
 })
 
-// EDIT
-const startEdit = () => {
-  isEditing.value = true
-}
-
 const saveTitle = () => {
   isEditing.value = false
   emit('update:title', localTitle.value)
 }
+
+const toggleMenu = () => {
+  emit('toggle-menu', isMenuOpen.value ? null : props.id)
+}
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-between p-3 md:px-4 mx-1 bg-slate-800 rounded-xl border border-slate-400/50"
-  >
-    <!-- LEFT -->
-    <div class="flex items-center gap-3 flex-1">
-      <button @click="$emit('open', id)" class="text-blue-400 hover:text-blue-300 transition">
-        <i-heroicons-folder-solid class="w-6 h-6" />
-      </button>
-
+  <div class="flex item-center w-full my-1 mx-2">
+    <!-- MENU BUTTON -->
+    <button
+      @click.stop="toggleMenu"
+      class="flex flex-col items-center"
+      :class="isMenuOpen ? 'text-blue-400' : 'text-slate-400'"
+    >
+      <i-heroicons-cog class="w-7 h-7 mr-1 mt-1" />
+      <i-heroicons-arrow-turn-down-right v-if="isMenuOpen" class="w-4 h-4 ml-2" />
+    </button>
+    <!-- CONTAINER -->
+    <div
+      class="w-full rounded-lg border border-slate-300/50"
+      :class="isMenuOpen ? 'bg-emerald-800/40' : 'bg-slate-900'"
+    >
       <!-- TITLE -->
-      <input
-        v-model="localTitle"
-        placeholder="Nouveau Dossier"
-        @blur="saveTitle"
-        @keyup.enter="saveTitle"
-        class="bg-transparent text-white text-base font-medium outline-none w-full"
-      />
-    </div>
 
-    <!-- RIGHT -->
-    <div class="flex items-center gap-2">
-      <!-- CATEGORY -->
-      <button
-        v-if="categories.length"
-        @click="showCategoryModal = true"
-        class="text-xs px-2 py-1 rounded bg-slate-700 text-gray-300 hover:bg-slate-600"
+      <div
+        class="flex items-center gap-1 flex-1 cursor-pointer text-base md:text-xl py-1.5 px-2"
+        @click="$emit('open', id)"
       >
-        {{ category }}
-      </button>
+        <i-heroicons-folder-open-solid class="text-lg text-blue-300" />
+        <!-- INPUT SI MENU OUVERT -->
+        <input
+          v-if="isMenuOpen"
+          v-model="localTitle"
+          @blur="saveTitle"
+          @keyup.enter="saveTitle"
+          @keyup.esc="localTitle = title"
+          @click.stop
+          :placeholder="'Dossier'"
+          class="bg-slate-600 w-full text-white outline-none border border-slate-300/40 rounded-lg p-1"
+        />
 
-      <!-- DELETE -->
-      <button @click="$emit('delete', id)" class="text-red-500 hover:text-red-400">
-        <i-heroicons-trash class="w-5 h-5" />
-      </button>
+        <!-- TEXTE NORMAL -->
+        <span v-else class="" :class="title ? 'text-slate-50' : 'text-slate-400'">
+          {{ title || 'Dossier' }}
+        </span>
+      </div>
+
+      <!-- ACTION MENU -->
+      <div v-if="isMenuOpen" class="mt-1 pl-6 pr-3 pb-2 flex gap-2">
+        <button
+          v-if="categories.length"
+          @click="showCategoryModal = true"
+          class="flex gap-1 text-left text-sm text-amber-400"
+        >
+          <i-heroicons-tag-solid class="w-5 h-5" />
+
+          {{ capitalize(category) || 'aucune' }}
+        </button>
+
+        <button
+          @click="$emit('delete', id)"
+          class="flex gap-1 text-left text-sm text-red-400 hover:text-red-300 ml-auto"
+        >
+          Supprimer
+          <i-heroicons-trash-solid class="w-5 h-5" />
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- CATEGORY MODAL -->
   <SelectDialog
     v-model="selectedCategory"
     :visible="showCategoryModal"

@@ -3,15 +3,18 @@ import { ref, computed } from 'vue'
 import { selectedFolderIdGlobal } from '@/assets/JS/useDashboardState'
 
 import { useFirebaseFolders } from '@/assets/JS/useFirebaseFolders'
+import { useFolderActions } from '@/assets/JS/useFolderAction'
 
 import FolderCard from '@/components/ui/FolderCard.vue'
 import FolderContent from '@/components/ui/FolderContent.vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
+import CategoryNavigator from '@/components/ui/CategoryNavigator.vue'
+
+import { useSwipe } from '@/assets/JS/useSwipe'
 
 import snippetList from '@/components/snippets/snippetList.vue'
 
 import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
-import SelectDialog from '@/components/ui/SelectDialog.vue'
 
 import { useRouter } from 'vue-router'
 
@@ -21,68 +24,80 @@ const router = useRouter()
 const { folders, addFolder, updateFolder, deleteFolder } = useFirebaseFolders('snippetFolders')
 
 // 🔥 STATE
+const { showConfirm, openMenuId, openFolder, askDelete, confirmDelete, cancelDelete } =
+  useFolderActions(deleteFolder)
+
 const selectedFolder = computed(() => {
   if (!selectedFolderIdGlobal.value) return null
   return folders.value.find((f) => f.id === selectedFolderIdGlobal.value)
 })
 
-const showConfirm = ref(false)
-const folderToDelete = ref(null)
+// Categories
 
-const categories = ['general', 'dependances', 'style', 'JS', 'archives']
-const selectedCategory = ref('general')
-const showCategoryModal = ref(false)
+const categories = ['rapide', 'style', 'programme', 'pages', 'JS', 'general']
+const assignableCategories = computed(() => categories.filter((c) => c !== 'general'))
 
-const capitalize = (str) => {
-  if (!str) return ''
-  return str.charAt(0).toUpperCase() + str.slice(1)
+const currentIndex = ref(0)
+
+const selectedCategory = computed(() => categories[currentIndex.value])
+
+const selectedIndex = computed({
+  get: () => currentIndex.value,
+  set: (i) => {
+    currentIndex.value = i
+  },
+})
+
+const nextCategory = () => {
+  currentIndex.value = (currentIndex.value + 1) % categories.length
 }
+
+const prevCategory = () => {
+  currentIndex.value = (currentIndex.value - 1 + categories.length) % categories.length
+}
+
+const { onTouchStart, onTouchEnd } = useSwipe({
+  onLeft: nextCategory,
+  onRight: prevCategory,
+})
 
 // 🔥 FILTER
 const snippetFolders = computed(() => {
-  return folders.value.filter((f) => {
-    if (f.type !== 'snippet') return false
-    if (selectedCategory.value === 'general') return true
-    return f.category === selectedCategory.value
-  })
+  return folders.value
+    .filter((f) => {
+      if (f.type !== 'snippet') return false
+
+      // GENERAL → tout sauf archives
+      if (selectedCategory.value === 'general') {
+        return f.category
+      }
+
+      return f.category === selectedCategory.value
+    })
+    .sort((a, b) => {
+      // 1. dossiers sans titre en haut
+      if (!a.title && !b.title) return 0
+      if (!a.title) return -1
+      if (!b.title) return 1
+
+      // 2. tri alphabétique
+      return a.title.localeCompare(b.title, 'fr', { sensitivity: 'base' })
+    })
+})
+const canCreateFolder = computed(() => {
+  return selectedCategory.value !== 'general'
 })
 
 // ================= ACTIONS =================
 
-const toHome = () => {
-  router.push({ name: 'home' })
-}
-
 // FOLDER
 const createFolder = async () => {
-  await addFolder('general', 'snippet')
-}
-
-const openFolder = (folder) => {
-  selectedFolderIdGlobal.value = folder.id
+  if (['general'].includes(selectedCategory.value)) return
+  await addFolder(selectedCategory.value, 'snippet')
 }
 
 const closeFolder = () => {
   selectedFolderIdGlobal.value = null
-}
-
-// DELETE
-const askDelete = (id) => {
-  folderToDelete.value = id
-  showConfirm.value = true
-}
-
-const confirmDelete = async () => {
-  if (folderToDelete.value) {
-    await deleteFolder(folderToDelete.value)
-  }
-  showConfirm.value = false
-  folderToDelete.value = null
-}
-
-const cancelDelete = () => {
-  showConfirm.value = false
-  folderToDelete.value = null
 }
 
 // ================= PROJECTS =================
@@ -195,35 +210,33 @@ const addSnippet = (projectId) => {
 </script>
 
 <template>
-  <main class="wrapper">
+  <main class="wrapper" @touchstart="onTouchStart" @touchend="onTouchEnd">
     <!-- LIST -->
     <div v-if="!selectedFolder">
-      <PageHeader :showCreate="true" :showBack="true" @back="toHome" @create="createFolder">
+      <PageHeader :showCreate="canCreateFolder" @create="createFolder">
         <template #center>
-          <button
-            @click="showCategoryModal = true"
-            class="flex text-2xl items-center gap-2 px-3 py-1 rounded-lg text-white"
-          >
-            {{ capitalize(selectedCategory) }}
-            <i-heroicons-chevron-down class="w-4 h-4" />
-          </button>
+          <CategoryNavigator v-model:index="selectedIndex" :categories="categories" />
         </template>
       </PageHeader>
 
-      <div class="flex flex-col gap-1">
-        <FolderCard
-          v-for="folder in snippetFolders"
-          :key="folder.id"
-          :id="folder.id"
-          :title="folder.title"
-          :category="folder.category"
-          :categories="categories"
-          @open="() => openFolder(folder)"
-          @delete="askDelete"
-          @update:title="(title) => updateFolder(folder.id, { title })"
-          @update:category="(cat) => updateFolder(folder.id, { category: cat })"
-        />
-      </div>
+      <Transition name="fade" mode="out-in">
+        <div :key="selectedCategory" class="flex justify-around flex-wrap">
+          <FolderCard
+            v-for="folder in snippetFolders"
+            :key="folder.id"
+            :id="folder.id"
+            :title="folder.title"
+            :category="folder.category"
+            :categories="assignableCategories"
+            @open="() => openFolder(folder)"
+            @delete="askDelete"
+            @update:title="(title) => updateFolder(folder.id, { title })"
+            @update:category="(cat) => updateFolder(folder.id, { category: cat })"
+            :openId="openMenuId"
+            @toggle-menu="openMenuId = $event"
+          />
+        </div>
+      </Transition>
     </div>
 
     <!-- DETAIL -->
@@ -263,12 +276,15 @@ const addSnippet = (projectId) => {
     @confirm="confirmDelete"
     @cancel="cancelDelete"
   />
-
-  <SelectDialog
-    v-model="selectedCategory"
-    :visible="showCategoryModal"
-    :options="categories"
-    title="Filtrer par catégorie"
-    @close="showCategoryModal = false"
-  />
 </template>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

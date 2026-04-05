@@ -1,4 +1,6 @@
 <script setup>
+import { capitalize } from 'vue'
+
 const props = defineProps({
   visible: Boolean,
   title: {
@@ -44,7 +46,7 @@ const emit = defineEmits(['update:modelValue', 'close'])
               : 'bg-slate-700 hover:bg-slate-600 text-gray-300'
           "
         >
-          {{ option }}
+          {{ capitalize(option) }}
         </button>
       </div>
 

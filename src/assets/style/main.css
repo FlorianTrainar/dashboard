@@ -20,9 +20,12 @@ body::-webkit-scrollbar {
   @apply box-border;
   -webkit-tap-highlight-color: transparent;
 }
+body {
+  @apply bg-slate-700;
+}
 
 main {
-  @apply pt-20 pb-24 mx-auto;
+  @apply pt-20 pb-24 mx-auto min-h-screen;
 }
 
 .wrapper {

@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { selectedFolderIdGlobal } from '@/assets/JS/useDashboardState'
+import { ref, computed, watch } from 'vue'
+import { selectedFolderIdGlobal, selectedProjectIdGlobal } from '@/assets/JS/useDashboardState'
 
 import { useFirebaseFolders } from '@/assets/JS/useFirebaseFolders'
+import { useFolderActions } from '@/assets/JS/useFolderAction'
 
 import FolderCard from '@/components/ui/FolderCard.vue'
 import FolderContent from '@/components/ui/FolderContent.vue'
@@ -10,7 +11,9 @@ import PageHeader from '@/components/ui/PageHeader.vue'
 
 import TaskList from '@/components/dashboard/TaskList.vue'
 import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
-import SelectDialog from '@/components/ui/SelectDialog.vue'
+import CategoryNavigator from '@/components/ui/CategoryNavigator.vue'
+
+import { useSwipe } from '@/assets/JS/useSwipe'
 
 import { useRouter } from 'vue-router'
 
@@ -20,32 +23,76 @@ const router = useRouter()
 const { folders, addFolder, updateFolder, deleteFolder } = useFirebaseFolders('taskFolders')
 
 // 🔥 STATE
+const { showConfirm, openMenuId, openFolder, askDelete, confirmDelete, cancelDelete } =
+  useFolderActions(deleteFolder)
+
 const selectedFolder = computed(() => {
   if (!selectedFolderIdGlobal.value) return null
 
   return folders.value.find((f) => f.id === selectedFolderIdGlobal.value)
 })
-const showConfirm = ref(false)
-const folderToDelete = ref(null)
 
-const categories = ['general', 'codes', 'admin', 'projets', 'archives']
-const selectedCategory = ref('general')
-const showCategoryModal = ref(false)
-const capitalize = (str) => {
-  if (!str) return ''
-  return str.charAt(0).toUpperCase() + str.slice(1)
+// Categories
+
+const categories = ['codes', 'admin', 'projets', 'general', 'archives']
+const assignableCategories = computed(() => categories.filter((c) => c !== 'general'))
+
+const currentIndex = ref(0)
+
+const selectedCategory = computed(() => categories[currentIndex.value])
+
+const selectedIndex = computed({
+  get: () => currentIndex.value,
+  set: (i) => {
+    currentIndex.value = i
+  },
+})
+
+const nextCategory = () => {
+  currentIndex.value = (currentIndex.value + 1) % categories.length
 }
+
+const prevCategory = () => {
+  currentIndex.value = (currentIndex.value - 1 + categories.length) % categories.length
+}
+
+const { onTouchStart, onTouchEnd } = useSwipe({
+  onLeft: nextCategory,
+  onRight: prevCategory,
+})
 
 // 🔥 REF vers TaskList
 const taskRefs = ref({})
 
 // 🔥 FILTER
 const dashboardFolders = computed(() => {
-  return folders.value.filter((f) => {
-    if (f.type !== 'dashboard') return false
-    if (selectedCategory.value === 'general') return true
-    return f.category === selectedCategory.value
-  })
+  return folders.value
+    .filter((f) => {
+      if (f.type !== 'dashboard') return false
+
+      // GENERAL → tout sauf archives
+      if (selectedCategory.value === 'general') {
+        return f.category !== 'archives'
+      }
+
+      // ARCHIVES → uniquement archives
+      if (selectedCategory.value === 'archives') {
+        return f.category === 'archives'
+      }
+
+      // NORMAL
+      return f.category === selectedCategory.value
+    })
+    .sort((a, b) => {
+      if (!a.title && !b.title) return 0
+      if (!a.title) return -1
+      if (!b.title) return 1
+      return a.title.localeCompare(b.title, 'fr', { sensitivity: 'base' })
+    })
+})
+
+const canCreateFolder = computed(() => {
+  return selectedCategory.value !== 'general' && selectedCategory.value !== 'archives'
 })
 
 // ================= ACTIONS =================
@@ -56,36 +103,15 @@ const toHome = () => {
 
 // FOLDER
 const createFolder = async () => {
-  await addFolder('codes', 'dashboard')
-}
+  if (selectedCategory.value === 'general' || selectedCategory.value === 'archives') {
+    return
+  }
 
-// OPEN / CLOSE
-const openFolder = (folder) => {
-  selectedFolderIdGlobal.value = folder.id
+  await addFolder(selectedCategory.value, 'dashboard')
 }
 
 const closeFolder = () => {
   selectedFolderIdGlobal.value = null
-}
-
-// DELETE
-const askDelete = (id) => {
-  folderToDelete.value = id
-  showConfirm.value = true
-}
-
-const confirmDelete = async () => {
-  if (folderToDelete.value) {
-    await deleteFolder(folderToDelete.value)
-  }
-
-  showConfirm.value = false
-  folderToDelete.value = null
-}
-
-const cancelDelete = () => {
-  showConfirm.value = false
-  folderToDelete.value = null
 }
 
 // ================= PROJECTS =================
@@ -196,39 +222,46 @@ const moveProject = (projectId, newOrder) => {
 const handleAddTask = (projectId) => {
   taskRefs.value[projectId]?.addTask()
 }
+
+watch(selectedFolderIdGlobal, () => {
+  selectedProjectIdGlobal.value = null
+})
 </script>
 
 <template>
-  <main class="wrapper">
+  <main class="wrapper" @touchstart="onTouchStart" @touchend="onTouchEnd">
     <!-- ================= LIST ================= -->
     <div v-if="!selectedFolder">
-      <PageHeader :showCreate="true" :showBack="true" @back="toHome" @create="createFolder">
+      <PageHeader
+        :showCreate="canCreateFolder"
+        :showBack="true"
+        @back="toHome"
+        @create="createFolder"
+      >
         <template #center>
-          <button
-            @click="showCategoryModal = true"
-            class="flex text-2xl items-center gap-2 px-3 py-1 rounded-lg text-white"
-          >
-            {{ capitalize(selectedCategory) }}
-            <i-heroicons-chevron-down class="w-4 h-4" />
-          </button>
+          <CategoryNavigator v-model:index="selectedIndex" :categories="categories" />
         </template>
       </PageHeader>
 
       <!-- LIST -->
-      <div class="flex flex-col gap-1">
-        <FolderCard
-          v-for="folder in dashboardFolders"
-          :key="folder.id"
-          :id="folder.id"
-          :title="folder.title"
-          :category="folder.category"
-          :categories="['codes', 'admin', 'projets', 'archives']"
-          @open="() => openFolder(folder)"
-          @delete="askDelete"
-          @update:title="(title) => updateFolder(folder.id, { title })"
-          @update:category="(cat) => updateFolder(folder.id, { category: cat })"
-        />
-      </div>
+      <Transition name="fade" mode="out-in">
+        <div :key="selectedCategory" class="flex justify-around flex-wrap">
+          <FolderCard
+            v-for="folder in dashboardFolders"
+            :key="folder.id"
+            :id="folder.id"
+            :title="folder.title"
+            :category="folder.category"
+            :categories="assignableCategories"
+            @open="() => openFolder(folder)"
+            @delete="askDelete"
+            @update:title="(title) => updateFolder(folder.id, { title })"
+            @update:category="(cat) => updateFolder(folder.id, { category: cat })"
+            :openId="openMenuId"
+            @toggle-menu="openMenuId = $event"
+          />
+        </div>
+      </Transition>
     </div>
 
     <!-- ================= DETAIL ================= -->
@@ -247,6 +280,7 @@ const handleAddTask = (projectId) => {
       <!-- CONTENT -->
       <FolderContent
         :folder="selectedFolder"
+        :openProjectId="selectedProjectIdGlobal"
         @update-project="(id, data) => updateProject(id, data)"
         @delete-project="deleteProject"
         @add-item="handleAddTask"
@@ -274,12 +308,15 @@ const handleAddTask = (projectId) => {
     @confirm="confirmDelete"
     @cancel="cancelDelete"
   />
-
-  <SelectDialog
-    v-model="selectedCategory"
-    :visible="showCategoryModal"
-    :options="categories"
-    title="Filtrer par catégorie"
-    @close="showCategoryModal = false"
-  />
 </template>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

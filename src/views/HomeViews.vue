@@ -2,7 +2,7 @@
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ReminderSection from '@/components/home/ReminderSection.vue'
 
-import { selectedFolderIdGlobal } from '@/assets/JS/useDashboardState'
+import { selectedFolderIdGlobal, selectedProjectIdGlobal } from '@/assets/JS/useDashboardState'
 
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -76,6 +76,7 @@ const getDaysRemaining = (timestamp) => {
 
 const openFolder = (r) => {
   selectedFolderIdGlobal.value = r.folderId
+  selectedProjectIdGlobal.value = r.projectId
   router.push('/dashboard')
 }
 </script>
@@ -101,15 +102,15 @@ const openFolder = (r) => {
     <!-- Board -->
     <div v-else class="space-y-6 mt-4">
       <ReminderSection
-        title="Aujourd’hui"
         :reminders="todayTasks"
         type="today"
         :getDaysRemaining="getDaysRemaining"
         @open="openFolder"
       />
 
+      <div class="w-1/2 mx-auto border border-dotted border-slate-300/30"></div>
+
       <ReminderSection
-        title="À venir"
         :reminders="upcomingTasks"
         type="upcoming"
         :getDaysRemaining="getDaysRemaining"
