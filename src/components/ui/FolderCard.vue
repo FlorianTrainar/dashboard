@@ -58,21 +58,21 @@ const toggleMenu = () => {
       class="flex flex-col items-center"
       :class="isMenuOpen ? 'text-blue-400' : 'text-slate-400'"
     >
-      <i-heroicons-cog class="w-7 h-7 mr-1 mt-1" />
+      <i-heroicons-cog class="text-2xl md:text-3xl mr-1 mt-1" />
       <i-heroicons-arrow-turn-down-right v-if="isMenuOpen" class="w-4 h-4 ml-2" />
     </button>
     <!-- CONTAINER -->
     <div
-      class="w-full rounded-lg border border-slate-300/50"
-      :class="isMenuOpen ? 'bg-emerald-800/40' : 'bg-slate-900'"
+      class="w-full rounded-lg transition duration-500"
+      :class="isMenuOpen ? ' bg-sky-600/40 border border-slate-300/50' : ''"
     >
       <!-- TITLE -->
 
       <div
-        class="flex items-center gap-1 flex-1 cursor-pointer text-base md:text-xl py-1.5 px-2"
+        class="flex items-center gap-1 flex-1 cursor-pointer text-xl md:text-2xl py-1.5 px-2"
         @click="$emit('open', id)"
       >
-        <i-heroicons-folder-open-solid class="text-lg text-blue-300" />
+        <i-heroicons-folder-open-solid class="text-blue-300" />
         <!-- INPUT SI MENU OUVERT -->
         <input
           v-if="isMenuOpen"
@@ -82,7 +82,7 @@ const toggleMenu = () => {
           @keyup.esc="localTitle = title"
           @click.stop
           :placeholder="'Dossier'"
-          class="bg-slate-600 w-full text-white outline-none border border-slate-300/40 rounded-lg p-1"
+          class="bg-slate-100 w-full text-slate-950 outline-none border border-slate-300/40 rounded-lg p-1"
         />
 
         <!-- TEXTE NORMAL -->

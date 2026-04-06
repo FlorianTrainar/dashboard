@@ -67,15 +67,15 @@ watch(
     <div
       v-for="project in sortedProjects"
       :key="project.id"
-      class="rounded-lg flex flex-col border border-slate-400/50 my-1 items-center"
-      :class="isMenuOpen(project.id) ? 'bg-emerald-800/40' : 'bg-slate-900/50'"
+      class="rounded-lg flex flex-col my-1 items-center transition duration-500"
+      :class="isMenuOpen(project.id) ? 'border border-slate-300/40 bg-sky-600/30 py-3 ' : ''"
     >
       <!-- Header -->
-      <div class="flex items-center rounded-t-lg gap-2 w-full px-4 py-1.5">
+      <div class="flex items-center rounded-t-lg gap-2 w-full px-4">
         <button
           @click.stop="toggleProjectMenu(project.id)"
           class="flex flex-col items-center"
-          :class="isMenuOpen(project.id) ? 'text-blue-400' : 'text-slate-400'"
+          :class="isMenuOpen(project.id) ? 'text-blue-400 ' : 'text-slate-400'"
         >
           <i-heroicons-play-solid v-if="isMenuOpen(project.id)" class="text-2xl" />
           <i-heroicons-pause-solid v-else class="text-2xl" />
@@ -84,7 +84,7 @@ watch(
         <input
           v-model="project.title"
           @blur="emit('update-project', project.id, { title: project.title })"
-          class="bg-transparent rounded-lg text-white outline-none text-lg md:text-xl font-semibold"
+          class="bg-transparent rounded-lg text-white outline-none text-xl md:text-2xl font-semibold"
           placeholder="Nom du projet"
         />
         <div class="flex items-center gap-1 ml-auto">
@@ -97,7 +97,7 @@ watch(
         </div>
       </div>
 
-      <section v-if="isMenuOpen(project.id)" class="flex flex-col items-center w-full pb-4">
+      <section v-if="isMenuOpen(project.id)" class="flex flex-col items-center w-full pb-2">
         <!-- SLOT (tasks) -->
         <div class="w-full">
           <slot name="items" :project="project" />
@@ -107,14 +107,14 @@ watch(
         <div class="flex justify-between w-full mt-2 px-4">
           <button
             @click="emit('add-item', project.id)"
-            class="text-green-400 hover:text-green-300 border border-slate-300 rounded-full bg-lime-600/80 text-slate-300 px-6"
+            class="text-green-600 border border-slate-300/40 rounded-full bg-slate-100/80 text-2xl font-bold px-6"
           >
-            <i-heroicons-plus class="w-6 h-6 mx-auto" />
+            +
           </button>
           <button
             v-if="isProjectEmpty(project)"
             @click="askDelete(project.id)"
-            class="text-red-400 flex gap-1"
+            class="flex items-center border border-red-600/50 bg-slate-50/80 rounded-full px-4 text-red-600 font-semibold flex gap-1"
           >
             supprimer
 

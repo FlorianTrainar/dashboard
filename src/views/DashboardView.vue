@@ -226,6 +226,18 @@ const handleAddTask = (projectId) => {
 watch(selectedFolderIdGlobal, () => {
   selectedProjectIdGlobal.value = null
 })
+
+watch(
+  folders,
+  (newFolders, oldFolders) => {
+    const newFolder = newFolders.find((f) => !oldFolders.some((o) => o.id === f.id))
+
+    if (newFolder) {
+      openMenuId.value = newFolder.id
+    }
+  },
+  { deep: true },
+)
 </script>
 
 <template>

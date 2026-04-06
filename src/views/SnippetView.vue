@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { selectedFolderIdGlobal } from '@/assets/JS/useDashboardState'
 
 import { useFirebaseFolders } from '@/assets/JS/useFirebaseFolders'
@@ -207,6 +207,18 @@ const addSnippet = (projectId) => {
 
   updateProject(projectId, { snippets })
 }
+
+watch(
+  folders,
+  (newFolders, oldFolders) => {
+    const newFolder = newFolders.find((f) => !oldFolders.some((o) => o.id === f.id))
+
+    if (newFolder) {
+      openMenuId.value = newFolder.id
+    }
+  },
+  { deep: true },
+)
 </script>
 
 <template>

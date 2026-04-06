@@ -29,11 +29,11 @@ const capitalize = (str) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-1">
+  <div class="flex flex-col items-center mx-auto gap-1">
     <!-- NAV -->
     <div class="flex items-center gap-3">
       <button @click="prevCategory">
-        <i-heroicons-chevron-left class="w-5 h-5 text-gray-300" />
+        <i-heroicons-chevron-left class="w-5 h-5 text-gray-500" />
       </button>
 
       <Transition name="slide" mode="out-in">
@@ -46,7 +46,7 @@ const capitalize = (str) => {
       </Transition>
 
       <button @click="nextCategory">
-        <i-heroicons-chevron-right class="w-5 h-5 text-gray-300" />
+        <i-heroicons-chevron-right class="w-5 h-5 text-gray-500" />
       </button>
     </div>
 

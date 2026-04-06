@@ -37,29 +37,32 @@ const emit = defineEmits(['open'])
             :class="getTaskClass(r.deadline)"
           >
             <div class="flex flex-col">
-              <div class="flex items-end text-slate-200">
-                <i-heroicons-folder-open-solid class="text-sm" />
-                <p class="text-xs">{{ r.folderTitle }}</p>
+              <div class="flex items-center gap-1 text-slate-200">
+                <i-heroicons-folder-open-solid />
+                <p>{{ r.folderTitle }}</p>
               </div>
-              <div class="flex items-end ml-1 text-slate-300">
-                <i-heroicons-arrow-turn-down-right class="text-sm" />
-                <p class="text-xs">{{ r.projectTitle }}</p>
+              <div
+                v-if="r.projectTitle"
+                class="flex items-center gap-1 ml-1 text-slate-300 text-xs"
+              >
+                <i-heroicons-arrow-turn-down-right />
+                <p class="text-sm">{{ r.projectTitle }}</p>
               </div>
             </div>
 
             <!-- DATE -->
             <div class="flex flex-col items-end">
-              <span v-if="getDaysRemaining(r.deadline)" class="text-xs">
+              <span v-if="getDaysRemaining(r.deadline)" class="text-sm">
                 {{ getDaysRemaining(r.deadline) }}
               </span>
-              <span class="text-xs">
+              <span class="text-sm">
                 {{ formatSmartDate(r.deadline) }}
               </span>
             </div>
           </div>
 
           <!-- TEXT -->
-          <p class="text-sm my-2 px-2">
+          <p class="my-2 px-2">
             {{ r.text }}
           </p>
         </div>

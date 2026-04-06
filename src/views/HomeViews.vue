@@ -100,7 +100,7 @@ const openFolder = (r) => {
     </div>
 
     <!-- Board -->
-    <div v-else class="space-y-6 mt-4">
+    <div v-else class="space-y-6 mt-1">
       <ReminderSection
         :reminders="todayTasks"
         type="today"
