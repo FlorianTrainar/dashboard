@@ -68,23 +68,28 @@ watch(
       v-for="project in sortedProjects"
       :key="project.id"
       class="rounded-lg flex flex-col my-1 items-center transition duration-500"
-      :class="isMenuOpen(project.id) ? 'border border-slate-300/40 bg-sky-600/30 py-3 ' : ''"
+      :class="isMenuOpen(project.id) ? 'border border-slate-300/40 bg-sky-600/30 pt-4 pb-2 ' : ''"
     >
       <!-- Header -->
-      <div class="flex items-center rounded-t-lg gap-2 w-full px-4">
-        <button
-          @click.stop="toggleProjectMenu(project.id)"
-          class="flex flex-col items-center"
-          :class="isMenuOpen(project.id) ? 'text-blue-400 ' : 'text-slate-400'"
-        >
-          <i-heroicons-play-solid v-if="isMenuOpen(project.id)" class="text-2xl" />
-          <i-heroicons-pause-solid v-else class="text-2xl" />
+      <div
+        class="flex items-center rounded-t-lg gap-2 w-full px-4"
+        :class="isMenuOpen(project.id) ? 'pb-2' : ''"
+      >
+        <button @click.stop="toggleProjectMenu(project.id)" class="flex items-center">
+          <div v-if="!isMenuOpen(project.id)" class="flex gap-1">
+            <i-heroicons-pause-solid class="text-2xl text-slate-400" />
+            <p class="text-xl md:text-2xl font-semibold">
+              {{ project.title }}
+            </p>
+          </div>
+          <i-heroicons-play-solid v-else class="text-2xl text-blue-400" />
         </button>
 
         <input
+          v-if="isMenuOpen(project.id)"
           v-model="project.title"
           @blur="emit('update-project', project.id, { title: project.title })"
-          class="bg-transparent rounded-lg text-white outline-none text-xl md:text-2xl font-semibold"
+          class="rounded-lg px-1 bg-slate-300 text-slate-900 outline-none text-xl md:text-2xl font-semibold w-full"
           placeholder="Nom du projet"
         />
         <div class="flex items-center gap-1 ml-auto">
@@ -104,7 +109,7 @@ watch(
         </div>
 
         <!-- ADD TASK -->
-        <div class="flex justify-between w-full mt-2 px-4">
+        <div class="flex justify-between w-full mt-3 px-4">
           <button
             @click="emit('add-item', project.id)"
             class="text-green-600 border border-slate-300/40 rounded-full bg-slate-100/80 text-2xl font-bold px-6"

@@ -27,7 +27,7 @@ body::-webkit-scrollbar {
 }
 
 main {
-  @apply pt-20 pb-24 mx-auto min-h-screen;
+  @apply pt-24 pb-32 mx-auto min-h-screen;
 }
 
 .wrapper {

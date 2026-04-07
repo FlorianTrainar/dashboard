@@ -33,11 +33,11 @@ const emit = defineEmits(['open'])
         <div class="flex flex-col gap-1">
           <!-- HEADER -->
           <div
-            class="flex justify-between items-center px-2 py-1 border-b border-slate-400/50 rounded-t-lg"
-            :class="getTaskClass(r.deadline)"
+            class="flex justify-between items-center px-2 py-1 border-b border-slate-400/50 bg-slate-900 rounded-t-lg"
+            :class="getTaskClass(r.deadline, 'text')"
           >
             <div class="flex flex-col">
-              <div class="flex items-center gap-1 text-slate-200">
+              <div class="flex items-center gap-1 text-blue-400">
                 <i-heroicons-folder-open-solid />
                 <p>{{ r.folderTitle }}</p>
               </div>
