@@ -1,12 +1,21 @@
 <script setup>
+import { computed } from 'vue'
 const props = defineProps({
   title: String,
   showBack: Boolean,
   showCreate: Boolean,
   showSort: Boolean,
+  size: {
+    type: String,
+    default: 'normal',
+  },
 })
 
 const emit = defineEmits(['back', 'create', 'sort'])
+
+const titleClass = computed(() => {
+  return props.size === 'xl' ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'
+})
 </script>
 
 <template>
@@ -33,7 +42,7 @@ const emit = defineEmits(['back', 'create', 'sort'])
         <slot name="center">
           <div class="flex items-center gap-2">
             <!-- <slot name="icon" class="text-2xl" /> -->
-            <h1 v-if="title" class="text-xl md:text-2xl font-semibold text-center">
+            <h1 v-if="title" :class="['font-semibold text-center', titleClass]">
               {{ title }}
             </h1>
           </div>

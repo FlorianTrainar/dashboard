@@ -34,8 +34,10 @@ const selectedFolder = computed(() => {
 
 // Categories
 
-const categories = ['rapide', 'style', 'programme', 'pages', 'JS', 'general']
-const assignableCategories = computed(() => categories.filter((c) => c !== 'general'))
+const categories = ['favoris', 'style', 'setup', 'pages', 'JS', 'general']
+const assignableCategories = computed(() =>
+  categories.filter((c) => !['general', 'favoris'].includes(c)),
+)
 
 const currentIndex = ref(0)
 
@@ -67,7 +69,10 @@ const snippetFolders = computed(() => {
     .filter((f) => {
       if (f.type !== 'snippet') return false
 
-      // GENERAL → tout sauf archives
+      if (selectedCategory.value === 'favoris') {
+        return f.favorite === true
+      }
+
       if (selectedCategory.value === 'general') {
         return f.category
       }
@@ -85,7 +90,7 @@ const snippetFolders = computed(() => {
     })
 })
 const canCreateFolder = computed(() => {
-  return selectedCategory.value !== 'general'
+  return !['general', 'favoris'].includes(selectedCategory.value)
 })
 
 // ================= ACTIONS =================
@@ -246,6 +251,9 @@ watch(
             @update:category="(cat) => updateFolder(folder.id, { category: cat })"
             :openId="openMenuId"
             @toggle-menu="openMenuId = $event"
+            :favorite="folder.favorite"
+            :showFavorite="true"
+            @update:favorite="(val) => updateFolder(folder.id, { favorite: val })"
           />
         </div>
       </Transition>

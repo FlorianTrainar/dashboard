@@ -11,10 +11,22 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  showFavorite: {
+    type: Boolean,
+    default: false,
+  },
+  favorite: Boolean,
   openId: String,
 })
 
-const emit = defineEmits(['open', 'delete', 'update:title', 'update:category', 'toggle-menu'])
+const emit = defineEmits([
+  'open',
+  'delete',
+  'update:title',
+  'update:category',
+  'toggle-menu',
+  'update:favorite',
+])
 
 // STATE
 const isEditing = ref(false)
@@ -64,7 +76,7 @@ const toggleMenu = () => {
     <!-- CONTAINER -->
     <div
       class="w-full rounded-lg transition duration-500"
-      :class="isMenuOpen ? ' bg-sky-600/40 border border-slate-300/50' : ''"
+      :class="isMenuOpen ? ' bg-sky-600/40 border border-slate-300/50 pt-1' : ''"
     >
       <!-- TITLE -->
 
@@ -92,23 +104,33 @@ const toggleMenu = () => {
       </div>
 
       <!-- ACTION MENU -->
-      <div v-if="isMenuOpen" class="mt-1 pl-6 pr-3 pb-2 flex gap-2">
+      <div v-if="isMenuOpen" class="mt-1 pl-10 pr-3 pb-2 flex gap-2 justify-between">
+        <!-- favoris -->
+        <button
+          v-if="showFavorite"
+          @click="$emit('update:favorite', !favorite)"
+          class="flex gap-1 text-yellow-400 mr-4"
+        >
+          <i-heroicons-star-solid v-if="favorite" class="text-xl" />
+          <i-heroicons-star v-else class="text-xl" />
+        </button>
+        <!-- Catégorie -->
         <button
           v-if="categories.length"
           @click="showCategoryModal = true"
-          class="flex gap-1 text-left text-sm text-amber-400"
+          class="flex gap-1 text-left text-sm text-lime-400"
         >
-          <i-heroicons-tag-solid class="w-5 h-5" />
+          <i-heroicons-tag-solid class="text-xl" />
 
           {{ capitalize(category) || 'aucune' }}
         </button>
 
+        <!-- Supprimer -->
         <button
           @click="$emit('delete', id)"
           class="flex gap-1 text-left text-sm text-red-400 hover:text-red-300 ml-auto"
         >
-          Supprimer
-          <i-heroicons-trash-solid class="w-5 h-5" />
+          <i-heroicons-trash-solid class="text-xl" />
         </button>
       </div>
     </div>

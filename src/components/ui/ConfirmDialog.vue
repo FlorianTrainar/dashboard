@@ -29,7 +29,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 
         <button
           @click="$emit('confirm')"
-          class="px-4 py-2 rounded-md bg-red-600 hover:bg-red-500 text-sm font-semibold transition"
+          class="px-4 py-2 rounded-md bg-red-500 text-sm font-semibold transition"
         >
           Confirmer
         </button>

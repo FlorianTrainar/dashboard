@@ -86,7 +86,7 @@ const openFolder = (r) => {
 
 <template>
   <main class="wrapper">
-    <PageHeader title="Floboard" />
+    <PageHeader title="Floboard" size="xl" />
     <!-- Login -->
     <div v-if="!user" class="flex flex-col gap-2 items-center">
       <h2>Connexion</h2>

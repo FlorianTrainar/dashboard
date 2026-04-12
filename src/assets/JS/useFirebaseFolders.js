@@ -61,6 +61,7 @@ export function useFirebaseFolders(collectionName = 'taskFolders') {
       type,
       category,
       projects: [],
+      favorite: false,
     })
   }
 
